@@ -1,0 +1,47 @@
+{
+    "ARI": 
+        {"2012":
+            {
+                "boxscoreid1": {
+                    "home_team": {
+                        "team_name": "Chicago Cubs",
+                        "inning_data": {
+                            "1": "0",
+                            "2": "0",
+                            "3": "0",
+                            "4": "0",
+                            "5": "0", 
+                            "6": "0", 
+                            "7": "0", 
+                            "8": "0", 
+                            "9": "0"}, 
+                        "other_box_score_data": {
+                            "runs": "0",
+                            "hits": "5",
+                            "errors": "2"
+                        }
+                    }, 
+                    "away_team": {
+                        "team_name": "St. Louis Cardinals",
+                        "inning_data": {
+                            "1": "1",
+                            "2": "1",
+                            "3": "0",
+                            "4": "0",
+                            "5": "1",
+                            "6": "0",
+                            "7": "0",
+                            "8": "0",
+                            "9": "0"
+                        },
+                        "other_box_score_data": {
+                            "runs": "3",
+                            "hits": "10",
+                            "errors": "0"
+                        }
+                    }
+                },
+                "boxscoreid2": ""
+            }
+    }
+}
