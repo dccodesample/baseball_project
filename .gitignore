@@ -1,0 +1,8 @@
+# virtual environments
+venv/, env/
+
+
+__pycahce__
+
+# vscode items
+.vscode
