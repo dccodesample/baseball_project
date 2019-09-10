@@ -5,7 +5,7 @@ env/
 .env/
 
 # Byte-compiled / optimized / DLL files
-__pycahce__/
+__pycache__/
 
 # vscode items
 .vscode
