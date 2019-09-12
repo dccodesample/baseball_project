@@ -26,12 +26,13 @@ class MlbWebScrapingUtils:
             for team_urls_dict in box_score_urls[team]:
                 for season in team_urls_dict:
                     season_box_scores = {}
-                    index = 0  # delete
+                    index = 0
                     for box_score_url in team_urls_dict[season]:
-                        if index < 2:  # delete
-                            box_score_id = self.__generate_box_score_id(box_score_url)
+                        print(team, season, box_score_url)
+                        if index < 2:
+                            box_score_id = self.__generate_box_score_id(box_score_url, team)
                             season_box_scores[box_score_id] = self.__get_box_score(box_score_url)
-                        index += 1  # delete
+                        index += 1
                     teams_box_scores[season] = season_box_scores
             box_scores[team] = teams_box_scores
         return box_scores
@@ -43,19 +44,19 @@ class MlbWebScrapingUtils:
             for season_home_page in home_page_urls[team]:
                 season_box_scores = {}
                 year = [year for year in season_home_page][0]
+                print(team, year)
                 season_home_page_url = season_home_page[year]
                 season_box_scores[year] = self.__get_box_score_urls(season_home_page_url, box_score_base_url)
                 team_box_scores.append(season_box_scores)
             box_score_urls[team] = team_box_scores
-            # break
         return box_score_urls
 
-    def __generate_box_score_id(self, box_score_url):
-        box_score_url = box_score_url.split('/')
-        box_score_url = box_score_url[-1]
-        box_score_url = box_score_url.split('.')
-        box_score_url = box_score_url[0][:-1]
-        return box_score_url
+    def __generate_box_score_id(self, box_score_url, team):
+        box_score_id = box_score_url.split('/')
+        box_score_id = box_score_id[-1]
+        box_score_id = box_score_id.split('.')
+        box_score_id = team + box_score_id[0][3:-1]
+        return box_score_id
 
     def __get_box_score(self, box_score_url):
         response_object = requests.get(box_score_url)

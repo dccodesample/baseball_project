@@ -20,7 +20,7 @@ class BoxScore:
 
         self.team_side = self.get_team_side()
         self.result = self.get_result()
-        self.blow_leads = self.calculate_blown_leads()
+        self.blown_leads = self.calculate_blown_leads()
 
     def calculate_blown_leads(self):
         """Checks to see if the team had a run of 3 runs or greater and lost it"""
@@ -54,6 +54,7 @@ class BoxScore:
             if away_team_run_differntial_running_total >= 3:
                 lead = True
             if lead is True and away_team_run_differntial_running_total <= 0:
+                lead = False
                 away_team_blown_leads += 1
         home_team_run_differntial_running_total = 0
         lead = False
@@ -63,6 +64,7 @@ class BoxScore:
             if home_team_run_differntial_running_total >= 3:
                 lead = True
             if lead is True and home_team_run_differntial_running_total <= 0:
+                lead = False
                 home_team_blown_leads += 1
         blown_leads = {}
         blown_leads['away'] = away_team_blown_leads
