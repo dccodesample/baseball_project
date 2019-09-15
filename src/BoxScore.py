@@ -34,16 +34,20 @@ class BoxScore:
         home_team_run_differentials = []
         for index in range(len(inning_data)):
             try:
-                if inning_data[index + 1].isnumeric():
-                    if index % 2 == 0:
-                        inning_away_team_run_differential = int(inning_data[index]) - int(inning_data[index + 1])
+                if index % 2 == 0:
+                    if index == 0:
+                        inning_away_team_run_differential = int(inning_data[index]) - 0
+                        away_team_run_differentials.append(inning_away_team_run_differential)
+                    else:
+                        inning_away_team_run_differential = int(inning_data[index]) - int(inning_data[index - 1])
                         away_team_run_differentials.append(inning_away_team_run_differential)
 
-                    else:
-                        inning_home_team_run_differential = int(inning_data[index]) - int(inning_data[index + 1])
-                        home_team_run_differentials.append(inning_home_team_run_differential)
                 else:
-                    break
+                    if inning_data[index].isnumeric():
+                        inning_home_team_run_differential = int(inning_data[index]) - int(inning_data[index - 1])
+                        home_team_run_differentials.append(inning_home_team_run_differential)
+                    else:
+                        break
             except Exception as e:
                 print(e)
         away_team_run_differntial_running_total = 0
