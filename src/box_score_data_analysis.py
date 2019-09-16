@@ -31,7 +31,7 @@ aggregation_function = {'blown_leads': 'sum'}
 blown_leads_total_data = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
 blown_leads_total_data = blown_leads_total_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
 blown_leads_total_data.plot.bar()
-plt.show()
+plt.savefig('results/blown_leads_total_data_bar_chart.png')
 
 # number of total blown leads per team per season
 seasons = box_score_data_frame['season'].unique()
@@ -45,7 +45,7 @@ for season in seasons:
     blown_leads_all_seasons = blown_leads_all_seasons.append(blown_leads_single_season)
 blown_leads_all_seasons = blown_leads_all_seasons.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
 blown_leads_all_seasons.plot.bar()
-plt.show()
+plt.savefig('results/blown_leads_all_seasons.png')
 
 # range of blown leads for the league (with team id)
 max_blown_leads_total = box_score_data_frame['blown_leads'].max()
@@ -53,14 +53,18 @@ max_blown_leads_total_data_frame = box_score_data_frame.where(box_score_data_fra
 min_blown_leads_total = box_score_data_frame['blown_leads'].min()
 min_blown_leads_total_data_frame = box_score_data_frame.where(box_score_data_frame['blown_leads'] == min_blown_leads_total).dropna()
 
-# range of blown leads for the league (with team id) per season (# don't need to graph, just useful as stats)
+# range of blown leads for the league (with team id) per season
 seasons = box_score_data_frame['season'].unique()
 max_blown_leads_all_seasons = pd.DataFrame()
+min_blown_leads_all_seasons = pd.DataFrame()
 for season in seasons:
     season_data_frame = box_score_data_frame.where(box_score_data_frame['season'] == season)
     max_blown_leads_season = season_data_frame['blown_leads'].max()
+    min_blown_leads_season = season_data_frame['blown_leads'].min()
     max_blown_leads_data = season_data_frame.where(season_data_frame['blown_leads'] == max_blown_leads_season).dropna()
+    min_blown_leads_data = season_data_frame.where(season_data_frame['blown_leads'] == min_blown_leads_season).dropna()
     max_blown_leads_all_seasons = max_blown_leads_all_seasons.append(max_blown_leads_data)
+    min_blown_leads_all_seasons = min_blown_leads_all_seasons.append(min_blown_leads_data)
 
 # mean, median, mode, range of blown leads for the league
 blown_leads_all_seasons_dict = {}
@@ -68,7 +72,7 @@ blown_leads_all_seasons_dict['mean'] = blown_leads_total_data['blown_leads'].mea
 blown_leads_all_seasons_dict['mode'] = blown_leads_total_data['blown_leads'].mode()[0]
 blown_leads_all_seasons_dict['median'] = blown_leads_total_data['blown_leads'].median()
 blown_leads_total_data.plot.box()
-plt.show()
+plt.savefig('results/blown_leads_total_data_box_plot.png')
 
 # mean, median, mode, range of blown leads for the league per season
 seasons = box_score_data_frame['season'].unique()
@@ -95,13 +99,13 @@ for season in seasons:
     blown_leads_per_season_dict[season] = season_stats_dict
 
 blown_leads_per_season_box_plot_data.plot.box()
-plt.show()
+plt.savefig('results/blown_leads_per_season_box_plot_data.png')
 
 # mean, median, mode, range of of blown leads for STL
 stl_blown_leads_stats_dict = {}
 stl_blown_leads = blown_leads_per_season_box_plot_data.loc['STL']
 stl_blown_leads.plot.box()
-plt.show()
+plt.savefig('results/stl_blown_leads.png')
 
 blown_leads_max = stl_blown_leads.max()
 blown_leads_max_season = stl_blown_leads.idxmax()
@@ -110,9 +114,9 @@ stl_blown_leads_stats_dict['maximum'] = {blown_leads_max_season: blown_leads_max
 blown_leads_min = stl_blown_leads.min()
 blown_leads_min_season = stl_blown_leads.idxmin()
 
-stl_blown_leads_stats_dict['minimun'] = {blown_leads_min_season: blown_leads_min}
+stl_blown_leads_stats_dict['minimum'] = {blown_leads_min_season: blown_leads_min}
 stl_blown_leads_stats_dict['mean'] = stl_blown_leads.mean()
-stl_blown_leads_stats_dict['mode'] = stl_blown_leads.mode()
+stl_blown_leads_stats_dict['mode'] = int(stl_blown_leads.mode())
 stl_blown_leads_stats_dict['median'] = stl_blown_leads.median()
 
 # number of times STL blew at least 1 lead and lost
@@ -137,3 +141,44 @@ stl_blown_leads_lead_average_per_season = statistics.mean(stl_blown_leads_lead_a
 stl_blown_leads_all_seasons_data_dict['total'] = stl_blown_leads_lead_losses_total
 stl_blown_leads_all_seasons_data_dict['average'] = stl_blown_leads_lead_average_per_season
 stl_blown_leads_all_seasons_data_dict['seasons'] = stl_blown_leads_lead_losses_per_season
+
+
+with open('results/results.txt', 'w') as f:
+    seasons = box_score_data_frame['season'].unique()
+    max_blown_leads_total_string = 'Maximum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(max_blown_leads_total) + '\n'
+    min_blown_leads_total_string = 'Minimum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(min_blown_leads_total) + '\n'
+    f.write(max_blown_leads_total_string)
+    f.write('Data for team(s) with the most blown leads from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write(str(max_blown_leads_total_data_frame) + '\n')
+    f.write('\n')
+    f.write(min_blown_leads_total_string)
+    f.write('Data for team(s) with the fewest blown leads from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write(str(min_blown_leads_total_data_frame) + '\n\n')
+    f.write('Data on the mean, median, and mode blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write('Mean number of blown leads: ' + str(blown_leads_all_seasons_dict['mean']) + '\n')
+    f.write('Mode number of blown leads: ' + str(blown_leads_all_seasons_dict['mode']) + '\n')
+    f.write('Median number of blown leads: ' + str(blown_leads_all_seasons_dict['median']) + '\n\n')
+    f.write('Data for the team(s) with the most blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write(str(max_blown_leads_all_seasons) + '\n\n')
+    f.write('Data for the team(s) with the fewest blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write(str(min_blown_leads_all_seasons) + '\n\n')
+    f.write('Data on the mean, mode, and median blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    for season in seasons:
+        f.write(season + ' Data:\n')
+        f.write('\tMean: ' + str(blown_leads_per_season_dict[season]['mean']) + '\n')
+        f.write('\tMode: ' + str(blown_leads_per_season_dict[season]['mode']) + '\n')
+        f.write('\tMedian: ' + str(blown_leads_per_season_dict[season]['median']) + '\n\n')
+    f.write('St. Louis Cardinals Blown Leads Data:\n')
+    f.write('\tAverage number of blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_stats_dict['maximum']) + '\n')
+    f.write('\tSeason with the most blown leads: ' + str(stl_blown_leads_stats_dict['maximum']) + '\n')
+    f.write('\tSeason with the fewest blown leads: ' + str(stl_blown_leads_stats_dict['minimum']) + '\n\n')
+    f.write('Data on the mean, mode, and median blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write('\tMean: ' + str(stl_blown_leads_stats_dict['mean']) + '\n')
+    f.write('\tMode: ' + str(stl_blown_leads_stats_dict['mode']) + '\n')
+    f.write('\tMedian: ' + str(stl_blown_leads_stats_dict['median']) + '\n\n')
+    f.write('Data on games where the St. Louis Cardinals blew at least one lead and lost:\n')
+    f.write('\tTotal number of "blown lead losses" for the St. Louis Cardinals from seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_all_seasons_data_dict['total']) + '\n')
+    f.write('\tAverage number of "blown lead losses" for the St. Louis Cardinals per season from ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_all_seasons_data_dict['average']) + '\n')
+    f.write('\tNumber of "blown lead losses" from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    for season in seasons:
+        f.write('\t\t' + season + ' Blown Lead Losses: ' + str(stl_blown_leads_all_seasons_data_dict['seasons'][season]) + '\n')
