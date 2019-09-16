@@ -1,0 +1,26 @@
+{
+    "STL": {
+        "2012": {
+            "STL20120404": {
+                "away_team": {
+                    "team_name": "St. Louis Cardinals", 
+                    "inning_data": {
+                        "1": "2", "2": "1", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "1", "9": "0"
+                    }, 
+                    "other_box_score_data": {
+                        "runs": "4", "hits": "13", "errors": "0"
+                    }
+                },
+                "home_team": {
+                    "team_name": "Miami Marlins", 
+                    "inning_data": {
+                        "1": "0", "2": "0", "3": "0", "4": "0", "5": "0", "6": "0", "7": "0", "8": "0", "9": "10"
+                    }, 
+                    "other_box_score_data": {
+                        "runs": "10", "hits": "4", "errors": "0"
+                    }
+                }
+            }
+        }
+    }
+}

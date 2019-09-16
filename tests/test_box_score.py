@@ -49,6 +49,17 @@ def test_calculate_one_away_blown_lead():
 # with no bottom half of final inning
 # blown lead in last inning (home)
 # blown lead in last inning (away)
+
+def test_away_blown_lead_last_inning():
+    with open('tests/test_data/away_blown_lead_last_inning.json', 'r') as f:
+        box_score_file = json.load(f)
+    for team in box_score_file:
+        for season in box_score_file[team]:
+            for box_score_id in box_score_file[team][season]:
+                box_score_data = box_score_file[team][season][box_score_id]
+    test_box_score = BoxScore(box_score_data, box_score_id, season, team)
+    assert test_box_score.blown_leads == 1
+
 # blown lead across multiple innings (home)
 # blown lead across multiple innings (away)
 # blown lead in one inning, but seperated (got lead in first, lost it in the fifth) (home)

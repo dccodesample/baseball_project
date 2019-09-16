@@ -6,7 +6,6 @@ class BoxScore:
     def __init__(self, box_score_data, box_score_id, season, team_abbrv):
         self.team_abbrv = team_abbrv
         self.team_name = self.get_team_name()
-        self.box_score_data = box_score_data
         self.box_score_id = box_score_id
         self.season = season
 
@@ -32,7 +31,7 @@ class BoxScore:
             inning_data.append(self.home_team_innings_data[inning])
         away_team_run_differentials = []
         home_team_run_differentials = []
-        for index in range(len(inning_data)):
+        for index in range(len(inning_data) + 1):
             try:
                 if index % 2 == 0:
                     if index == 0:
@@ -49,6 +48,10 @@ class BoxScore:
                     else:
                         break
             except Exception as e:
+                # checks that the away team did not blown a lead in the bottom of the 9th
+                if inning_data[index - 1].isnumeric():
+                    inning_away_team_run_differential = 0 - int(inning_data[index - 1])
+                    away_team_run_differentials.append(inning_away_team_run_differential)
                 print(e)
         away_team_run_differntial_running_total = 0
         lead = False
@@ -76,8 +79,8 @@ class BoxScore:
         return blown_leads[self.team_side]
 
     def __calculate_winner(self):
-        home_team_score = self.home_team_other_data['runs']
-        away_team_score = self.away_team_other_data['runs']
+        home_team_score = int(self.home_team_other_data['runs'])
+        away_team_score = int(self.away_team_other_data['runs'])
         return self.home_team if home_team_score > away_team_score else self.away_team
 
     def get_result(self):
