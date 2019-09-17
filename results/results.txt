@@ -40,7 +40,7 @@ Data on the mean, mode, and median blown leads for each season from 2012-2013:
 	Median: 10.0
 
 St. Louis Cardinals Blown Leads Data:
-	Average number of blown leads for all seasons 2012-2013: {'blown_leads_2012': 9.0}
+	Average number of blown leads for all seasons 2012-2013: 7.5
 	Season with the most blown leads: {'blown_leads_2012': 9.0}
 	Season with the fewest blown leads: {'blown_leads_2013': 6.0}
 

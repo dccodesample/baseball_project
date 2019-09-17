@@ -13,3 +13,5 @@ refine
 Run with Full DataSet
 Writeup ReadMe
 write unit tests
+run again with small data
+run again with full data

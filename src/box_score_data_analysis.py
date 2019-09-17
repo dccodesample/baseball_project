@@ -41,7 +41,7 @@ for season in seasons:
     blown_leads_all_seasons = blown_leads_all_seasons.append(blown_leads_single_season)
 blown_leads_all_seasons = blown_leads_all_seasons.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
 blown_leads_all_seasons.plot.bar()
-plt.savefig('results/blown_leads_all_seasons.png')
+plt.savefig('results/blown_leads_all_seasons_bar.png')
 
 # range of blown leads for the league (with team id)
 aggregation_function = {'blown_leads': 'sum'}
@@ -100,13 +100,15 @@ for season in seasons:
     blown_leads_per_season_dict[season] = season_stats_dict
 
 blown_leads_per_season_box_plot_data.plot.box()
-plt.savefig('results/blown_leads_per_season_box_plot_data.png')
+plt.savefig('results/blown_leads_per_season_box_plot.png')
 
 # mean, median, mode, range of of blown leads for STL
+stl_blown_leads_plot_data = pd.DataFrame(blown_leads_per_season_box_plot_data.loc['STL'])
+stl_blown_leads_plot_data.plot.box()
+plt.savefig('results/stl_blown_leads.png')
+
 stl_blown_leads_stats_dict = {}
 stl_blown_leads = blown_leads_per_season_box_plot_data.loc['STL']
-stl_blown_leads.plot.box()
-plt.savefig('results/stl_blown_leads.png')
 
 blown_leads_max = stl_blown_leads.max()
 blown_leads_max_season = stl_blown_leads.idxmax()
@@ -138,11 +140,11 @@ for season in seasons:
     stl_blown_leads_single_season = list(stl_blown_leads_single_season_data.iloc[0])[0]
     stl_blown_leads_lead_losses_per_season[season] = stl_blown_leads_single_season
 
-stl_blown_leads_lead_average_per_season = list(stl_blown_leads_lead_losses_per_season.values())
-stl_blown_leads_lead_average_per_season = statistics.mean(stl_blown_leads_lead_average_per_season)
+stl_blown_leads_lead_mean_per_season = list(stl_blown_leads_lead_losses_per_season.values())
+stl_blown_leads_lead_mean_per_season = statistics.mean(stl_blown_leads_lead_mean_per_season)
 
 stl_blown_leads_all_seasons_data_dict['total'] = stl_blown_leads_lead_losses_total
-stl_blown_leads_all_seasons_data_dict['average'] = stl_blown_leads_lead_average_per_season
+stl_blown_leads_all_seasons_data_dict['mean'] = stl_blown_leads_lead_mean_per_season
 stl_blown_leads_all_seasons_data_dict['seasons'] = stl_blown_leads_lead_losses_per_season
 
 
@@ -172,7 +174,7 @@ with open('results/results.txt', 'w') as f:
         f.write('\tMode: ' + str(blown_leads_per_season_dict[season]['mode']) + '\n')
         f.write('\tMedian: ' + str(blown_leads_per_season_dict[season]['median']) + '\n\n')
     f.write('St. Louis Cardinals Blown Leads Data:\n')
-    f.write('\tAverage number of blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_stats_dict['maximum']) + '\n')
+    f.write('\tAverage number of blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_stats_dict['mean']) + '\n')
     f.write('\tSeason with the most blown leads: ' + str(stl_blown_leads_stats_dict['maximum']) + '\n')
     f.write('\tSeason with the fewest blown leads: ' + str(stl_blown_leads_stats_dict['minimum']) + '\n\n')
     f.write('Data on the mean, mode, and median blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
@@ -181,7 +183,7 @@ with open('results/results.txt', 'w') as f:
     f.write('\tMedian: ' + str(stl_blown_leads_stats_dict['median']) + '\n\n')
     f.write('Data on games where the St. Louis Cardinals blew at least one lead and lost:\n')
     f.write('\tTotal number of "blown lead losses" for the St. Louis Cardinals from seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_all_seasons_data_dict['total']) + '\n')
-    f.write('\tAverage number of "blown lead losses" for the St. Louis Cardinals per season from ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_all_seasons_data_dict['average']) + '\n')
+    f.write('\tAverage number of "blown lead losses" for the St. Louis Cardinals per season from ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_leads_all_seasons_data_dict['mean']) + '\n')
     f.write('\tNumber of "blown lead losses" from ' + seasons[0] + '-' + seasons[-1] + ':\n')
     for season in seasons:
         f.write('\t\t' + season + ' Blown Lead Losses: ' + str(stl_blown_leads_all_seasons_data_dict['seasons'][season]) + '\n')
