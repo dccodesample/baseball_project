@@ -1,88 +1,57 @@
-Maximum blown leads for any major league baseball team, seasons 2012-2013: 1
-Data for team(s) with the most blown leads from 2012-2013:
-  team_abbrv            team_name box_score_id season             home_team  ...                            away_team_innings_data                        away_team_other_data team_side result blown_leads
-0        BAL    Baltimore Orioles  BAL20130403   2013        Tampa Bay Rays  ...                       [3, 0, 0, 0, 0, 1, 1, 1, 1]  {'runs': '7', 'hits': '11', 'errors': '0'}      away    0.0         1.0
-0        CIN      Cincinnati Reds  CIN20130403   2013       Cincinnati Reds  ...                       [0, 0, 0, 0, 1, 0, 2, 1, 0]   {'runs': '4', 'hits': '9', 'errors': '2'}      home    1.0         1.0
-0        CLE    Cleveland Indians  CLE20120405   2012     Cleveland Indians  ...  [0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3]  {'runs': '7', 'hits': '10', 'errors': '1'}      home    0.0         1.0
-0        STL  St. Louis Cardinals  STL20120404   2012         Miami Marlins  ...                       [2, 1, 0, 0, 0, 0, 0, 1, 0]  {'runs': '4', 'hits': '13', 'errors': '0'}      away    0.0         1.0
-0        STL  St. Louis Cardinals  STL20130401   2013  Arizona Diamondbacks  ...                      [10, 0, 0, 0, 0, 0, 0, 0, 0]  {'runs': '10', 'hits': '5', 'errors': '1'}      away    0.0         1.0
-0        TBR       Tampa Bay Rays  TBR20120406   2012        Tampa Bay Rays  ...                       [0, 2, 4, 0, 0, 0, 0, 0, 0]   {'runs': '6', 'hits': '9', 'errors': '0'}      home    1.0         1.0
+Maximum blown leads for any major league baseball team, seasons 2012-2013: 38
+Data for team(s) with the most blown leads for all seasons from 2012-2013:
+            blown_leads
+team_abbrv             
+COL                38.0
 
-[6 rows x 13 columns]
-
-Minimum blown leads for any major league baseball team, seasons 2012-2013: 0
-Data for team(s) with the fewest blown leads from 2012-2013:
-   team_abbrv             team_name box_score_id season             home_team  ...             away_team_innings_data                        away_team_other_data team_side result blown_leads
-0         ARI  Arizona Diamondbacks  ARI20120406   2012  Arizona Diamondbacks  ...        [0, 0, 0, 0, 2, 1, 0, 0, 1]  {'runs': '4', 'hits': '11', 'errors': '3'}      home    1.0         0.0
-0         ARI  Arizona Diamondbacks  ARI20120407   2012  Arizona Diamondbacks  ...        [0, 0, 0, 2, 0, 0, 2, 0, 0]   {'runs': '4', 'hits': '6', 'errors': '0'}      home    1.0         0.0
-0         ARI  Arizona Diamondbacks  ARI20130401   2013  Arizona Diamondbacks  ...        [1, 0, 0, 0, 0, 0, 1, 0, 0]   {'runs': '2', 'hits': '5', 'errors': '1'}      home    1.0         0.0
-0         ARI  Arizona Diamondbacks  ARI20130402   2013  Arizona Diamondbacks  ...        [0, 0, 0, 1, 0, 2, 3, 0, 0]  {'runs': '6', 'hits': '10', 'errors': '1'}      home    0.0         0.0
-0         ATL        Atlanta Braves  ATL20120405   2012         New York Mets  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '4', 'errors': '1'}      away    0.0         0.0
-..        ...                   ...          ...    ...                   ...  ...                                ...                                         ...       ...    ...         ...
-0         TOR     Toronto Blue Jays  TOR20130403   2013     Toronto Blue Jays  ...  [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1]  {'runs': '3', 'hits': '10', 'errors': '0'}      home    0.0         0.0
-0         WSN  Washington Nationals  WSN20120405   2012          Chicago Cubs  ...        [0, 0, 0, 0, 0, 0, 0, 1, 1]   {'runs': '2', 'hits': '4', 'errors': '1'}      away    1.0         0.0
-0         WSN  Washington Nationals  WSN20120407   2012          Chicago Cubs  ...        [0, 0, 0, 2, 0, 0, 0, 5, 0]  {'runs': '7', 'hits': '12', 'errors': '0'}      away    1.0         0.0
-0         WSN  Washington Nationals  WSN20130401   2013  Washington Nationals  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '3', 'errors': '0'}      home    1.0         0.0
-0         WSN  Washington Nationals  WSN20130403   2013  Washington Nationals  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '4', 'errors': '1'}      home    1.0         0.0
-
-[114 rows x 13 columns]
+Minimum blown leads for any major league baseball team, seasons 2012-2013: 10
+Data for team(s) with the fewest blown leads for all seasons from 2012-2013:
+            blown_leads
+team_abbrv             
+LAD                10.0
 
 Data on the mean, median, and mode blown leads for all seasons 2012-2013:
-Mean number of blown leads: 0.2
-Mode number of blown leads: 0
-Median number of blown leads: 0.0
+Mean number of blown leads: 20.133333333333333
+Mode number of blown leads: 19
+Median number of blown leads: 20.5
 
 Data for the team(s) with the most blown leads for each season from 2012-2013:
-  team_abbrv            team_name box_score_id season             home_team  ...                            away_team_innings_data                        away_team_other_data team_side result blown_leads
-0        CLE    Cleveland Indians  CLE20120405   2012     Cleveland Indians  ...  [0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3]  {'runs': '7', 'hits': '10', 'errors': '1'}      home    0.0         1.0
-0        STL  St. Louis Cardinals  STL20120404   2012         Miami Marlins  ...                       [2, 1, 0, 0, 0, 0, 0, 1, 0]  {'runs': '4', 'hits': '13', 'errors': '0'}      away    0.0         1.0
-0        TBR       Tampa Bay Rays  TBR20120406   2012        Tampa Bay Rays  ...                       [0, 2, 4, 0, 0, 0, 0, 0, 0]   {'runs': '6', 'hits': '9', 'errors': '0'}      home    1.0         1.0
-0        BAL    Baltimore Orioles  BAL20130403   2013        Tampa Bay Rays  ...                       [3, 0, 0, 0, 0, 1, 1, 1, 1]  {'runs': '7', 'hits': '11', 'errors': '0'}      away    0.0         1.0
-0        CIN      Cincinnati Reds  CIN20130403   2013       Cincinnati Reds  ...                       [0, 0, 0, 0, 1, 0, 2, 1, 0]   {'runs': '4', 'hits': '9', 'errors': '2'}      home    1.0         1.0
-0        STL  St. Louis Cardinals  STL20130401   2013  Arizona Diamondbacks  ...                      [10, 0, 0, 0, 0, 0, 0, 0, 0]  {'runs': '10', 'hits': '5', 'errors': '1'}      away    0.0         1.0
-
-[6 rows x 13 columns]
+                   blown_leads
+team_abbrv season             
+COL        2012           21.0
+BAL        2013           17.0
+COL        2013           17.0
 
 Data for the team(s) with the fewest blown leads for each season from 2012-2013:
-   team_abbrv             team_name box_score_id season             home_team  ...             away_team_innings_data                        away_team_other_data team_side result blown_leads
-0         ARI  Arizona Diamondbacks  ARI20120406   2012  Arizona Diamondbacks  ...        [0, 0, 0, 0, 2, 1, 0, 0, 1]  {'runs': '4', 'hits': '11', 'errors': '3'}      home    1.0         0.0
-0         ARI  Arizona Diamondbacks  ARI20120407   2012  Arizona Diamondbacks  ...        [0, 0, 0, 2, 0, 0, 2, 0, 0]   {'runs': '4', 'hits': '6', 'errors': '0'}      home    1.0         0.0
-0         ATL        Atlanta Braves  ATL20120405   2012         New York Mets  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '4', 'errors': '1'}      away    0.0         0.0
-0         ATL        Atlanta Braves  ATL20120407   2012         New York Mets  ...        [0, 0, 0, 0, 2, 0, 0, 0, 0]   {'runs': '2', 'hits': '7', 'errors': '0'}      away    0.0         0.0
-0         BAL     Baltimore Orioles  BAL20120406   2012     Baltimore Orioles  ...        [0, 0, 0, 0, 0, 0, 0, 0, 2]   {'runs': '2', 'hits': '6', 'errors': '0'}      home    1.0         0.0
-..        ...                   ...          ...    ...                   ...  ...                                ...                                         ...       ...    ...         ...
-0         TEX         Texas Rangers  TEX20130402   2013        Houston Astros  ...        [0, 0, 1, 0, 0, 0, 2, 2, 2]  {'runs': '7', 'hits': '12', 'errors': '0'}      away    1.0         0.0
-0         TOR     Toronto Blue Jays  TOR20130402   2013     Toronto Blue Jays  ...        [0, 2, 0, 0, 2, 0, 0, 0, 0]   {'runs': '4', 'hits': '7', 'errors': '1'}      home    0.0         0.0
-0         TOR     Toronto Blue Jays  TOR20130403   2013     Toronto Blue Jays  ...  [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1]  {'runs': '3', 'hits': '10', 'errors': '0'}      home    0.0         0.0
-0         WSN  Washington Nationals  WSN20130401   2013  Washington Nationals  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '3', 'errors': '0'}      home    1.0         0.0
-0         WSN  Washington Nationals  WSN20130403   2013  Washington Nationals  ...        [0, 0, 0, 0, 0, 0, 0, 0, 0]   {'runs': '0', 'hits': '4', 'errors': '1'}      home    1.0         0.0
-
-[114 rows x 13 columns]
+                   blown_leads
+team_abbrv season             
+TOR        2012            4.0
+LAD        2013            4.0
 
 Data on the mean, mode, and median blown leads for each season from 2012-2013:
 2012 Data:
-	Mean: 0.1
-	Mode: 0.0
-	Median: 0.0
+	Mean: 10.1
+	Mode: 8.0
+	Median: 10.0
 
 2013 Data:
-	Mean: 0.1
-	Mode: 0.0
-	Median: 0.0
+	Mean: 10.033333333333333
+	Mode: 10.0
+	Median: 10.0
 
 St. Louis Cardinals Blown Leads Data:
-	Average number of blown leads for all seasons 2012-2013: {'blown_leads_2012': 1.0}
-	Season with the most blown leads: {'blown_leads_2012': 1.0}
-	Season with the fewest blown leads: {'blown_leads_2012': 1.0}
+	Average number of blown leads for all seasons 2012-2013: {'blown_leads_2012': 9.0}
+	Season with the most blown leads: {'blown_leads_2012': 9.0}
+	Season with the fewest blown leads: {'blown_leads_2013': 6.0}
 
 Data on the mean, mode, and median blown leads for all seasons 2012-2013:
-	Mean: 1.0
-	Mode: 1
-	Median: 1.0
+	Mean: 7.5
+	Mode: [6.0, 9.0]
+	Median: 7.5
 
 Data on games where the St. Louis Cardinals blew at least one lead and lost:
-	Total number of "blown lead losses" for the St. Louis Cardinals from seasons 2012-2013: 2
-	Average number of "blown lead losses" for the St. Louis Cardinals per season from 2012-2013: 1
+	Total number of "blown lead losses" for the St. Louis Cardinals from seasons 2012-2013: 11
+	Average number of "blown lead losses" for the St. Louis Cardinals per season from 2012-2013: 5.5
 	Number of "blown lead losses" from 2012-2013:
-		2012 Blown Lead Losses: 1
-		2013 Blown Lead Losses: 1
+		2012 Blown Lead Losses: 5.0
+		2013 Blown Lead Losses: 6.0

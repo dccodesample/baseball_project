@@ -7,7 +7,7 @@ import time
 import statistics
 start_time = datetime.datetime.now()
 
-with open('data/box_score_data_small.json', 'r') as f:
+with open('data/box_score_data.json', 'r') as f:
     box_score_data = json.load(f)
 
 box_score_data_frame = pd.DataFrame()
@@ -21,10 +21,6 @@ for team in box_score_data:
             values = list(box_score.__dict__.values())
             temp_data_frame = pd.DataFrame([values], columns=columns)
             box_score_data_frame = box_score_data_frame.append(temp_data_frame)
-
-
-end_time = datetime.datetime.now()
-print(f'Total Time: {end_time - start_time}')
 
 # number of total blown leads per team
 aggregation_function = {'blown_leads': 'sum'}
@@ -48,10 +44,13 @@ blown_leads_all_seasons.plot.bar()
 plt.savefig('results/blown_leads_all_seasons.png')
 
 # range of blown leads for the league (with team id)
-max_blown_leads_total = box_score_data_frame['blown_leads'].max()
-max_blown_leads_total_data_frame = box_score_data_frame.where(box_score_data_frame['blown_leads'] == max_blown_leads_total).dropna()
-min_blown_leads_total = box_score_data_frame['blown_leads'].min()
-min_blown_leads_total_data_frame = box_score_data_frame.where(box_score_data_frame['blown_leads'] == min_blown_leads_total).dropna()
+aggregation_function = {'blown_leads': 'sum'}
+max_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
+max_blown_leads_total = max_blown_leads_total_data_frame['blown_leads'].max()
+max_blown_leads_total_data_frame = max_blown_leads_total_data_frame.where(max_blown_leads_total_data_frame['blown_leads'] == max_blown_leads_total).dropna()
+min_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
+min_blown_leads_total = min_blown_leads_total_data_frame['blown_leads'].min()
+min_blown_leads_total_data_frame = min_blown_leads_total_data_frame.where(min_blown_leads_total_data_frame['blown_leads'] == min_blown_leads_total).dropna()
 
 # range of blown leads for the league (with team id) per season
 seasons = box_score_data_frame['season'].unique()
@@ -59,6 +58,8 @@ max_blown_leads_all_seasons = pd.DataFrame()
 min_blown_leads_all_seasons = pd.DataFrame()
 for season in seasons:
     season_data_frame = box_score_data_frame.where(box_score_data_frame['season'] == season)
+    aggregation_function = {'blown_leads': 'sum'}
+    season_data_frame = season_data_frame.groupby(['team_abbrv', 'season']).aggregate(aggregation_function)
     max_blown_leads_season = season_data_frame['blown_leads'].max()
     min_blown_leads_season = season_data_frame['blown_leads'].min()
     max_blown_leads_data = season_data_frame.where(season_data_frame['blown_leads'] == max_blown_leads_season).dropna()
@@ -90,9 +91,9 @@ for season in seasons:
 
     # stats dict stuff
     season_stats_dict = {}
-    mean_blown_leads = blown_leads_single_season['blown_leads'].mean()
-    mode_blown_leads = blown_leads_single_season['blown_leads'].mode()[0]
-    median_blown_leads = blown_leads_single_season['blown_leads'].median()
+    mean_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].mean()
+    mode_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].mode()[0]
+    median_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].median()
     season_stats_dict['mean'] = mean_blown_leads
     season_stats_dict['mode'] = mode_blown_leads
     season_stats_dict['median'] = median_blown_leads
@@ -116,7 +117,7 @@ blown_leads_min_season = stl_blown_leads.idxmin()
 
 stl_blown_leads_stats_dict['minimum'] = {blown_leads_min_season: blown_leads_min}
 stl_blown_leads_stats_dict['mean'] = stl_blown_leads.mean()
-stl_blown_leads_stats_dict['mode'] = int(stl_blown_leads.mode())
+stl_blown_leads_stats_dict['mode'] = list(stl_blown_leads.mode())
 stl_blown_leads_stats_dict['median'] = stl_blown_leads.median()
 
 # number of times STL blew at least 1 lead and lost
@@ -132,7 +133,9 @@ stl_blown_leads_lead_losses_total = len(stl_blown_leads_data.index)
 stl_blown_leads_lead_losses_per_season = {}
 for season in seasons:
     stl_blown_leads_single_season_data = stl_blown_leads_data.where(stl_blown_leads_data['season'] == season).dropna()
-    stl_blown_leads_single_season = len(stl_blown_leads_single_season_data.index)
+    aggregation_function = {'blown_leads': 'sum'}
+    stl_blown_leads_single_season_data = stl_blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)
+    stl_blown_leads_single_season = list(stl_blown_leads_single_season_data.iloc[0])[0]
     stl_blown_leads_lead_losses_per_season[season] = stl_blown_leads_single_season
 
 stl_blown_leads_lead_average_per_season = list(stl_blown_leads_lead_losses_per_season.values())
@@ -148,11 +151,11 @@ with open('results/results.txt', 'w') as f:
     max_blown_leads_total_string = 'Maximum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(max_blown_leads_total) + '\n'
     min_blown_leads_total_string = 'Minimum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(min_blown_leads_total) + '\n'
     f.write(max_blown_leads_total_string)
-    f.write('Data for team(s) with the most blown leads from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write('Data for team(s) with the most blown leads for all seasons from ' + seasons[0] + '-' + seasons[-1] + ':\n')
     f.write(str(max_blown_leads_total_data_frame) + '\n')
     f.write('\n')
     f.write(min_blown_leads_total_string)
-    f.write('Data for team(s) with the fewest blown leads from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+    f.write('Data for team(s) with the fewest blown leads for all seasons from ' + seasons[0] + '-' + seasons[-1] + ':\n')
     f.write(str(min_blown_leads_total_data_frame) + '\n\n')
     f.write('Data on the mean, median, and mode blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
     f.write('Mean number of blown leads: ' + str(blown_leads_all_seasons_dict['mean']) + '\n')
@@ -182,3 +185,6 @@ with open('results/results.txt', 'w') as f:
     f.write('\tNumber of "blown lead losses" from ' + seasons[0] + '-' + seasons[-1] + ':\n')
     for season in seasons:
         f.write('\t\t' + season + ' Blown Lead Losses: ' + str(stl_blown_leads_all_seasons_data_dict['seasons'][season]) + '\n')
+
+end_time = datetime.datetime.now()
+print(f'Total Time: {end_time - start_time}')

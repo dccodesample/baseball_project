@@ -26,13 +26,13 @@ class MlbWebScrapingUtils:
             for team_urls_dict in box_score_urls[team]:
                 for season in team_urls_dict:
                     season_box_scores = {}
-                    index = 0
+                    # index = 0
                     for box_score_url in team_urls_dict[season]:
                         print(team, season, box_score_url)
-                        if index < 2:
-                            box_score_id = self.__generate_box_score_id(box_score_url, team)
-                            season_box_scores[box_score_id] = self.__get_box_score(box_score_url)
-                        index += 1
+                        # if index < 2:
+                        box_score_id = self.__generate_box_score_id(box_score_url, team)
+                        season_box_scores[box_score_id] = self.__get_box_score(box_score_url)
+                        # index += 1
                     teams_box_scores[season] = season_box_scores
             box_scores[team] = teams_box_scores
         return box_scores
