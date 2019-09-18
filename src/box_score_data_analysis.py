@@ -23,24 +23,43 @@ for team in box_score_data:
             box_score_data_frame = box_score_data_frame.append(temp_data_frame)
 
 # number of total blown leads per team
+seasons = box_score_data_frame['season'].unique()
 aggregation_function = {'blown_leads': 'sum'}
+
 blown_leads_total_data = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
 blown_leads_total_data = blown_leads_total_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
-blown_leads_total_data.plot.bar()
-plt.savefig('results/blown_leads_total_data_bar_chart.png')
 
+
+blown_leads_total_data_plot = blown_leads_total_data.plot(kind='bar')
+y_ticks = [tick for tick in range((blown_leads_total_data['blown_leads'].max()) + 1)]
+blown_leads_total_data_plot.spines['right'].set_visible(False)
+blown_leads_total_data_plot.spines['top'].set_visible(False)
+blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['left'].set_linewidth(1)
+blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
+plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}')
+plt.xlabel('Teams')
+plt.ylabel('Blown Leads')
+plt.yticks(y_ticks)
+plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+plt.savefig('results/blown_leads_total_data_bar_chart.png', bbox_inches='tight')
+
+# TODOTODOTODO
 # number of total blown leads per team per season
 seasons = box_score_data_frame['season'].unique()
-blown_leads_all_seasons = pd.DataFrame()
+blown_leads_all_seasons_data = pd.DataFrame()
 
 for season in seasons:
     blown_leads_single_season = box_score_data_frame.where(box_score_data_frame['season'] == season).dropna()
     blown_leads_single_season['team_abbrv'] = blown_leads_single_season['team_abbrv'].apply(lambda x: f'{x}_{season}')
     aggregation_function = {'blown_leads': 'sum'}
     blown_leads_single_season = blown_leads_single_season.groupby('team_abbrv').aggregate(aggregation_function)
-    blown_leads_all_seasons = blown_leads_all_seasons.append(blown_leads_single_season)
-blown_leads_all_seasons = blown_leads_all_seasons.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
-blown_leads_all_seasons.plot.bar()
+    blown_leads_all_seasons_data = blown_leads_all_seasons_data.append(blown_leads_single_season)
+
+blown_leads_all_seasons_data = blown_leads_all_seasons_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
+blown_leads_all_seasons_data_plot = blown_leads_all_seasons_data.plot(kind='bar')
+# blown_leads_all_seasons_data_plot = blown_leads_all_seasons_data.iloc[0:50].plot(kind='bar')
 plt.savefig('results/blown_leads_all_seasons_bar.png')
 
 # range of blown leads for the league (with team id)
@@ -72,43 +91,82 @@ blown_leads_all_seasons_dict = {}
 blown_leads_all_seasons_dict['mean'] = blown_leads_total_data['blown_leads'].mean()
 blown_leads_all_seasons_dict['mode'] = blown_leads_total_data['blown_leads'].mode()[0]
 blown_leads_all_seasons_dict['median'] = blown_leads_total_data['blown_leads'].median()
-blown_leads_total_data.plot.box()
+blown_leads_total_data_plot = blown_leads_total_data.plot(kind='box')
+y_ticks = [tick for tick in range((blown_leads_total_data['blown_leads'].max()) + 1)]
+blown_leads_total_data_plot.spines['right'].set_visible(False)
+blown_leads_total_data_plot.spines['top'].set_visible(False)
+blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['left'].set_linewidth(1)
+blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
+plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}')
+plt.xlabel('All Teams')
+# hide the x tick label
+blown_leads_total_data_plot.set_xticklabels('')
+plt.ylabel('Blown Leads')
+plt.yticks(y_ticks)
+plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
 plt.savefig('results/blown_leads_total_data_box_plot.png')
 
 # mean, median, mode, range of blown leads for the league per season
-seasons = box_score_data_frame['season'].unique()
+seasons = list(box_score_data_frame['season'].unique())
 teams = box_score_data_frame['team_abbrv'].unique()
-blown_leads_per_season_box_plot_data = pd.DataFrame(index=teams)
+blown_leads_per_season_data = pd.DataFrame(index=teams)
 blown_leads_per_season_dict = {}
 
 for season in seasons:
     # dataframe stuff
-    blown_leads_single_season_box_plot_data = box_score_data_frame.where(box_score_data_frame['season'] == season).dropna()
+    blown_leads_single_season_data = box_score_data_frame.where(box_score_data_frame['season'] == season).dropna()
     aggregation_function = {'blown_leads': 'sum'}
-    blown_leads_single_season_box_plot_data = blown_leads_single_season_box_plot_data.groupby('team_abbrv').aggregate(aggregation_function)
-    blown_leads_single_season_box_plot_data = blown_leads_single_season_box_plot_data.rename(columns={'blown_leads': f'blown_leads_{season}'})
-    blown_leads_per_season_box_plot_data = blown_leads_per_season_box_plot_data.merge(blown_leads_single_season_box_plot_data, left_index=True, right_index=True)
+    blown_leads_single_season_data = blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)
+    blown_leads_single_season_data = blown_leads_single_season_data.rename(columns={'blown_leads': f'Blown Leads {season}'})
+    blown_leads_per_season_data = blown_leads_per_season_data.merge(blown_leads_single_season_data, left_index=True, right_index=True)
 
     # stats dict stuff
     season_stats_dict = {}
-    mean_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].mean()
-    mode_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].mode()[0]
-    median_blown_leads = blown_leads_single_season_box_plot_data[f'blown_leads_{season}'].median()
+    mean_blown_leads = blown_leads_single_season_data[f'Blown Leads {season}'].mean()
+    mode_blown_leads = blown_leads_single_season_data[f'Blown Leads {season}'].mode()[0]
+    median_blown_leads = blown_leads_single_season_data[f'Blown Leads {season}'].median()
     season_stats_dict['mean'] = mean_blown_leads
     season_stats_dict['mode'] = mode_blown_leads
     season_stats_dict['median'] = median_blown_leads
     blown_leads_per_season_dict[season] = season_stats_dict
 
-blown_leads_per_season_box_plot_data.plot.box()
+blown_leads_per_season_data_plot = blown_leads_per_season_data.plot(kind='box')
+blown_leads_per_season_data_plot.spines['right'].set_visible(False)
+blown_leads_per_season_data_plot.spines['top'].set_visible(False)
+blown_leads_per_season_data_plot.spines['left'].set_edgecolor('0.5')
+blown_leads_per_season_data_plot.spines['left'].set_linewidth(1)
+blown_leads_per_season_data_plot.spines['bottom'].set_edgecolor('0.5')
+blown_leads_per_season_data_plot.spines['bottom'].set_linewidth(1)
+plt.title(f'Total Blown Leads for each Season: {seasons[0]}-{seasons[-1]}')
+plt.xlabel('Seasons')
+blown_leads_per_season_data_plot.set_xticklabels(seasons)
+plt.ylabel('Blown Leads')
+plt.yticks(y_ticks)
+plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
 plt.savefig('results/blown_leads_per_season_box_plot.png')
 
-# mean, median, mode, range of of blown leads for STL
-stl_blown_leads_plot_data = pd.DataFrame(blown_leads_per_season_box_plot_data.loc['STL'])
-stl_blown_leads_plot_data.plot.box()
+# mean, median, mode, range of blown leads for STL
+stl_blown_leads_data = pd.DataFrame(blown_leads_per_season_data.loc['STL'])
+stl_blown_leads_data_plot = stl_blown_leads_data.plot(kind='box')
+
+stl_blown_leads_data_plot.spines['right'].set_visible(False)
+stl_blown_leads_data_plot.spines['top'].set_visible(False)
+stl_blown_leads_data_plot.spines['left'].set_edgecolor('0.5')
+stl_blown_leads_data_plot.spines['left'].set_linewidth(1)
+stl_blown_leads_data_plot.spines['bottom'].set_edgecolor('0.5')
+stl_blown_leads_data_plot.spines['bottom'].set_linewidth(1)
+plt.title(f'Total Blown Leads for the St. Louis Cardinals: {seasons[0]}-{seasons[-1]}')
+plt.xlabel('STL')
+stl_blown_leads_data_plot.set_xticklabels('')
+plt.ylabel('Blown Leads')
+plt.yticks(y_ticks)
+plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
 plt.savefig('results/stl_blown_leads.png')
 
 stl_blown_leads_stats_dict = {}
-stl_blown_leads = blown_leads_per_season_box_plot_data.loc['STL']
+stl_blown_leads = blown_leads_per_season_data.loc['STL']
 
 blown_leads_max = stl_blown_leads.max()
 blown_leads_max_season = stl_blown_leads.idxmax()
