@@ -1,13 +1,14 @@
 import json
 import pandas as pd
 from matplotlib import pyplot as plt
+plt.rcParams["font.family"] = "Verdana"
 from src.BoxScore import BoxScore
 import datetime
 import time
 import statistics
 start_time = datetime.datetime.now()
 
-with open('data/box_score_data.json', 'r') as f:
+with open('data/box_score_data_small.json', 'r') as f:
     box_score_data = json.load(f)
 
 box_score_data_frame = pd.DataFrame()
@@ -38,12 +39,17 @@ blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
 blown_leads_total_data_plot.spines['left'].set_linewidth(1)
 blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
 blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
-plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}')
-plt.xlabel('Teams')
-plt.ylabel('Blown Leads')
-plt.yticks(y_ticks)
+plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+plt.xlabel('Teams', labelpad=10, fontsize=12)
+plt.ylabel('Blown\nLeads', rotation=0, labelpad=40, fontsize=12)
+plt.yticks(y_ticks, fontsize=8)
+plt.xticks(fontsize=8)
 plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
-plt.savefig('results/blown_leads_total_data_bar_chart.png', bbox_inches='tight')
+plt.subplots_adjust(right=0.5)
+plt.tight_layout()
+plt.savefig('results/blown_leads_total_data_bar_chart.png')
+
+
 
 # TODOTODOTODO
 # number of total blown leads per team per season
@@ -60,7 +66,7 @@ for season in seasons:
 blown_leads_all_seasons_data = blown_leads_all_seasons_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
 blown_leads_all_seasons_data_plot = blown_leads_all_seasons_data.plot(kind='bar')
 # blown_leads_all_seasons_data_plot = blown_leads_all_seasons_data.iloc[0:50].plot(kind='bar')
-plt.savefig('results/blown_leads_all_seasons_bar.png')
+plt.savefig('results/blown_leads_all_seasons_bar.png', bbox_inches='tight')
 
 # range of blown leads for the league (with team id)
 aggregation_function = {'blown_leads': 'sum'}
@@ -99,13 +105,16 @@ blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
 blown_leads_total_data_plot.spines['left'].set_linewidth(1)
 blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
 blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
-plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}')
-plt.xlabel('All Teams')
+plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+plt.xlabel('All Teams', labelpad=10, fontsize=12)
 # hide the x tick label
 blown_leads_total_data_plot.set_xticklabels('')
-plt.ylabel('Blown Leads')
-plt.yticks(y_ticks)
+plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+plt.yticks(y_ticks, fontsize=8)
+plt.xticks(fontsize=8)
 plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+plt.subplots_adjust(right=0.5)
+plt.tight_layout()
 plt.savefig('results/blown_leads_total_data_box_plot.png')
 
 # mean, median, mode, range of blown leads for the league per season
@@ -139,12 +148,15 @@ blown_leads_per_season_data_plot.spines['left'].set_edgecolor('0.5')
 blown_leads_per_season_data_plot.spines['left'].set_linewidth(1)
 blown_leads_per_season_data_plot.spines['bottom'].set_edgecolor('0.5')
 blown_leads_per_season_data_plot.spines['bottom'].set_linewidth(1)
-plt.title(f'Total Blown Leads for each Season: {seasons[0]}-{seasons[-1]}')
-plt.xlabel('Seasons')
+plt.title(f'Total Blown Leads\nfor each Season: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+plt.xlabel('Seasons', labelpad=10, fontsize=12)
 blown_leads_per_season_data_plot.set_xticklabels(seasons)
-plt.ylabel('Blown Leads')
-plt.yticks(y_ticks)
+plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+plt.yticks(y_ticks, fontsize=8)
+plt.xticks(fontsize=8)
 plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+plt.subplots_adjust(right=0.5)
+plt.tight_layout()
 plt.savefig('results/blown_leads_per_season_box_plot.png')
 
 # mean, median, mode, range of blown leads for STL
@@ -157,13 +169,16 @@ stl_blown_leads_data_plot.spines['left'].set_edgecolor('0.5')
 stl_blown_leads_data_plot.spines['left'].set_linewidth(1)
 stl_blown_leads_data_plot.spines['bottom'].set_edgecolor('0.5')
 stl_blown_leads_data_plot.spines['bottom'].set_linewidth(1)
-plt.title(f'Total Blown Leads for the St. Louis Cardinals: {seasons[0]}-{seasons[-1]}')
-plt.xlabel('STL')
+plt.title(f'Total Blown Leads for the St. Louis Cardinals: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+plt.xlabel('STL', labelpad=10, fontsize=12)
 stl_blown_leads_data_plot.set_xticklabels('')
-plt.ylabel('Blown Leads')
-plt.yticks(y_ticks)
+plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+plt.yticks(y_ticks, fontsize=8)
+plt.xticks(fontsize=8)
 plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
-plt.savefig('results/stl_blown_leads.png')
+# plt.subplots_adjust(right=0.5)
+# plt.tight_layout()
+plt.savefig('results/stl_blown_leads.png', bbox_inches='tight')
 
 stl_blown_leads_stats_dict = {}
 stl_blown_leads = blown_leads_per_season_data.loc['STL']
