@@ -5,8 +5,8 @@
 from utils.mlb_project_config_utils import MlbTeamConfigUtils
 from utils.mlb_project_web_scraping_utils import MlbWebScrapingUtils
 
-years = ['2012', '2013']
-# years = [2012, 2013, 2014, 2015, 2016, 2017, 2018]
+# years = ['2012', '2013']
+years = [2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
 # collect team abbreviations
 team_config_file_object = MlbTeamConfigUtils('config/mlb_config_data.json')
