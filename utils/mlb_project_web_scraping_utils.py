@@ -1,6 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
 import json
+import logging
+import sys
+logging.basicConfig(format='%(asctime)s - %(filename)s - %(module)s - %(lineno)d - %(levelname)s - %(message)s',
+                    level=logging.INFO)
 
 
 class MlbWebScrapingUtils:
@@ -8,6 +12,7 @@ class MlbWebScrapingUtils:
         self.team_abbrvs = team_abbrvs
         self.years = years
         self.base_url = base_url
+        self.logger = logging.getLogger()
 
     def url_generator(self):
         home_page_urls = {}
@@ -26,13 +31,13 @@ class MlbWebScrapingUtils:
             for team_urls_dict in box_score_urls[team]:
                 for season in team_urls_dict:
                     season_box_scores = {}
-                    # index = 0
+                    index = 0  # Delete
                     for box_score_url in team_urls_dict[season]:
-                        print(team, season, box_score_url)
-                        # if index < 2:
-                        box_score_id = self.__generate_box_score_id(box_score_url, team)
-                        season_box_scores[box_score_id] = self.__get_box_score(box_score_url)
-                        # index += 1
+                        self.logger.info(f'Collecting data for {team} {season} {box_score_url}')
+                        if index < 2:  # Delete
+                            box_score_id = self.__generate_box_score_id(box_score_url, team)
+                            season_box_scores[box_score_id] = self.__get_box_score(box_score_url)
+                        index += 1  # Delete
                     teams_box_scores[season] = season_box_scores
             box_scores[team] = teams_box_scores
         return box_scores
@@ -44,7 +49,7 @@ class MlbWebScrapingUtils:
             for season_home_page in home_page_urls[team]:
                 season_box_scores = {}
                 year = [year for year in season_home_page][0]
-                print(team, year)
+                self.logger.info(f'Collecting box score urls for {year} {team}')
                 season_home_page_url = season_home_page[year]
                 season_box_scores[year] = self.__get_box_score_urls(season_home_page_url, box_score_base_url)
                 team_box_scores.append(season_box_scores)
@@ -138,10 +143,12 @@ class MlbWebScrapingUtils:
                     box_score_url_fragment = boxscore_element.a['href']
                     box_score_url = box_score_base_url + box_score_url_fragment
                     box_score_urls.append(box_score_url)
-                except Exception as e:
-                    print(e)
-                    pass
+                except AttributeError as e:
+                    self.logger.debug(f'Non-boxscore row found {e}')
             return box_score_urls
+        else:
+            self.logger.error(f'Unexected error collecting box score urls. Response object returned with non-200 status code: {response_object.status_code}')
+            sys.exit()
 
     def output_box_score_data(self, box_scores, output_file_name):
         with open(output_file_name, 'w') as f:

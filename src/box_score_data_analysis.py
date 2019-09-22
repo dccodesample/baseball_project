@@ -1,3 +1,4 @@
+# TODO: re-organize code, logging, Error handling, formatting, efficiency, clarity, comment code last
 import json
 import pandas as pd
 from matplotlib import pyplot as plt
