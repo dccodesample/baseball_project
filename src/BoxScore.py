@@ -10,6 +10,8 @@ class BoxScore:
     An class representing 1) a box score, and 2) containing requisite information that will be needed to complete data analysis.
 
     Attributes:
+        self.logger: python logging object
+
         self.team_abbrv: the abbreviation for the team the box score belongs to (e.g., ARI)
         self.team_name: the full name for the team
         self.box_score_id: the unique identifier for a box score
@@ -26,8 +28,6 @@ class BoxScore:
         self.team_side: A string indicating which side (away or home) the team
         self.result = A boolean indicating whether or not the team won (True is won, False if lost)
         self.blown_leads = The number of leads the team blew
-
-        self.logger: python logging object
     """
 
     def __init__(self, box_score_data, box_score_id, season, team_abbrv):
@@ -39,6 +39,8 @@ class BoxScore:
             season: the season number for the box score (e.g., 2012).
             team_abbrv: the team abbreviation for the team the box score belongs to.
         """
+
+        self.logger = logging.getLogger()
 
         self.team_abbrv = team_abbrv
         self.team_name = self.get_team_name()
@@ -56,8 +58,6 @@ class BoxScore:
         self.team_side = self.get_team_side()
         self.result = self.get_result()
         self.blown_leads = self.calculate_blown_leads()
-
-        self.logger = logging.getLogger()
 
     def calculate_blown_leads(self):
         """Calculates how many times the team the box score belongs to had a lead of 3 runs or greater and lost it.
