@@ -1,0 +1,433 @@
+  team_abbrv                      team_name box_score_id season  \
+0        ARI           Arizona Diamondbacks  ARI20120406   2012   
+0        ARI           Arizona Diamondbacks  ARI20120407   2012   
+0        ATL                 Atlanta Braves  ATL20120405   2012   
+0        ATL                 Atlanta Braves  ATL20120407   2012   
+0        BAL              Baltimore Orioles  BAL20120406   2012   
+0        BAL              Baltimore Orioles  BAL20120407   2012   
+0        BOS                 Boston Red Sox  BOS20120405   2012   
+0        BOS                 Boston Red Sox  BOS20120407   2012   
+0        CHC                   Chicago Cubs  CHC20120405   2012   
+0        CHC                   Chicago Cubs  CHC20120407   2012   
+0        CHW              Chicago White Sox  CHW20120406   2012   
+0        CHW              Chicago White Sox  CHW20120407   2012   
+0        CIN                Cincinnati Reds  CIN20120405   2012   
+0        CIN                Cincinnati Reds  CIN20120407   2012   
+0        CLE              Cleveland Indians  CLE20120405   2012   
+0        CLE              Cleveland Indians  CLE20120407   2012   
+0        COL               Colorado Rockies  COL20120406   2012   
+0        COL               Colorado Rockies  COL20120407   2012   
+0        DET                 Detroit Tigers  DET20120405   2012   
+0        DET                 Detroit Tigers  DET20120407   2012   
+0        HOU                 Houston Astros  HOU20120406   2012   
+0        HOU                 Houston Astros  HOU20120407   2012   
+0        KCR             Kansas City Royals  KCR20120406   2012   
+0        KCR             Kansas City Royals  KCR20120407   2012   
+0        LAA  Los Angeles Angels of Anaheim  LAA20120406   2012   
+0        LAA  Los Angeles Angels of Anaheim  LAA20120407   2012   
+0        LAD            Los Angeles Dodgers  LAD20120405   2012   
+0        LAD            Los Angeles Dodgers  LAD20120406   2012   
+0        MIA                  Miami Marlins  MIA20120404   2012   
+0        MIA                  Miami Marlins  MIA20120405   2012   
+0        MIL              Milwaukee Brewers  MIL20120406   2012   
+0        MIL              Milwaukee Brewers  MIL20120407   2012   
+0        MIN                Minnesota Twins  MIN20120406   2012   
+0        MIN                Minnesota Twins  MIN20120407   2012   
+0        NYM                  New York Mets  NYM20120405   2012   
+0        NYM                  New York Mets  NYM20120407   2012   
+0        NYY               New York Yankees  NYY20120406   2012   
+0        NYY               New York Yankees  NYY20120407   2012   
+0        OAK              Oakland Athletics  OAK20120328   2012   
+0        OAK              Oakland Athletics  OAK20120329   2012   
+0        PHI          Philadelphia Phillies  PHI20120405   2012   
+0        PHI          Philadelphia Phillies  PHI20120407   2012   
+0        PIT             Pittsburgh Pirates  PIT20120405   2012   
+0        PIT             Pittsburgh Pirates  PIT20120407   2012   
+0        SDP               San Diego Padres  SDP20120405   2012   
+0        SDP               San Diego Padres  SDP20120406   2012   
+0        SEA               Seattle Mariners  SEA20120328   2012   
+0        SEA               Seattle Mariners  SEA20120329   2012   
+0        SFG           San Francisco Giants  SFG20120406   2012   
+0        SFG           San Francisco Giants  SFG20120407   2012   
+0        STL            St. Louis Cardinals  STL20120404   2012   
+0        STL            St. Louis Cardinals  STL20120406   2012   
+0        TBR                 Tampa Bay Rays  TBR20120406   2012   
+0        TBR                 Tampa Bay Rays  TBR20120407   2012   
+0        TEX                  Texas Rangers  TEX20120406   2012   
+0        TEX                  Texas Rangers  TEX20120407   2012   
+0        TOR              Toronto Blue Jays  TOR20120405   2012   
+0        TOR              Toronto Blue Jays  TOR20120407   2012   
+0        WSN           Washington Nationals  WSN20120405   2012   
+0        WSN           Washington Nationals  WSN20120407   2012   
+
+                       home_team  \
+0           Arizona Diamondbacks   
+0           Arizona Diamondbacks   
+0                  New York Mets   
+0                  New York Mets   
+0              Baltimore Orioles   
+0              Baltimore Orioles   
+0                 Detroit Tigers   
+0                 Detroit Tigers   
+0                   Chicago Cubs   
+0                   Chicago Cubs   
+0                  Texas Rangers   
+0                  Texas Rangers   
+0                Cincinnati Reds   
+0                Cincinnati Reds   
+0              Cleveland Indians   
+0              Cleveland Indians   
+0                 Houston Astros   
+0                 Houston Astros   
+0                 Detroit Tigers   
+0                 Detroit Tigers   
+0                 Houston Astros   
+0                 Houston Astros   
+0  Los Angeles Angels of Anaheim   
+0  Los Angeles Angels of Anaheim   
+0  Los Angeles Angels of Anaheim   
+0  Los Angeles Angels of Anaheim   
+0               San Diego Padres   
+0               San Diego Padres   
+0                  Miami Marlins   
+0                Cincinnati Reds   
+0              Milwaukee Brewers   
+0              Milwaukee Brewers   
+0              Baltimore Orioles   
+0              Baltimore Orioles   
+0                  New York Mets   
+0                  New York Mets   
+0                 Tampa Bay Rays   
+0                 Tampa Bay Rays   
+0              Oakland Athletics   
+0              Oakland Athletics   
+0             Pittsburgh Pirates   
+0             Pittsburgh Pirates   
+0             Pittsburgh Pirates   
+0             Pittsburgh Pirates   
+0               San Diego Padres   
+0               San Diego Padres   
+0              Oakland Athletics   
+0              Oakland Athletics   
+0           Arizona Diamondbacks   
+0           Arizona Diamondbacks   
+0                  Miami Marlins   
+0              Milwaukee Brewers   
+0                 Tampa Bay Rays   
+0                 Tampa Bay Rays   
+0                  Texas Rangers   
+0                  Texas Rangers   
+0              Cleveland Indians   
+0              Cleveland Indians   
+0                   Chicago Cubs   
+0                   Chicago Cubs   
+
+                             home_team_innings_data  \
+0                       [3, 0, 0, 0, 0, 2, 0, 0, X]   
+0                       [2, 2, 0, 0, 1, 0, 0, 0, X]   
+0                       [0, 0, 0, 0, 0, 1, 0, 0, X]   
+0                       [1, 0, 0, 1, 1, 0, 1, 0, X]   
+0                       [2, 0, 0, 1, 0, 1, 0, 0, X]   
+0                       [0, 1, 2, 3, 0, 0, 2, 0, X]   
+0                       [0, 0, 0, 0, 0, 0, 1, 1, 1]   
+0                       [2, 0, 0, 3, 2, 1, 2, 0, X]   
+0                       [0, 0, 0, 1, 0, 0, 0, 0, 0]   
+0                       [1, 0, 0, 3, 0, 0, 0, 0, 0]   
+0                       [1, 0, 1, 0, 0, 1, 0, 0, X]   
+0                       [0, 1, 2, 0, 0, 0, 0, 0, 0]   
+0                       [1, 0, 0, 0, 0, 1, 0, 2, X]   
+0                       [0, 0, 0, 2, 0, 0, 0, 1, 0]   
+0  [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0              [0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1]   
+0                       [1, 0, 0, 2, 0, 0, 0, 0, 0]   
+0                       [1, 0, 0, 2, 1, 1, 1, 1, X]   
+0                       [0, 0, 0, 0, 0, 0, 1, 1, 1]   
+0                       [2, 0, 0, 3, 2, 1, 2, 0, X]   
+0                       [1, 0, 0, 2, 0, 0, 0, 0, 0]   
+0                       [1, 0, 0, 2, 1, 1, 1, 1, X]   
+0                       [0, 0, 0, 0, 0, 0, 0, 5, X]   
+0                       [0, 0, 0, 0, 0, 0, 2, 0, 1]   
+0                       [0, 0, 0, 0, 0, 0, 0, 5, X]   
+0                       [0, 0, 0, 0, 0, 0, 2, 0, 1]   
+0                       [0, 0, 0, 0, 0, 1, 0, 2, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 0]   
+0                       [1, 0, 0, 0, 0, 1, 0, 2, X]   
+0                       [2, 0, 0, 0, 0, 0, 0, 0, 3]   
+0                       [0, 1, 0, 0, 0, 3, 0, 2, X]   
+0                       [2, 0, 0, 1, 0, 1, 0, 0, X]   
+0                       [0, 1, 2, 3, 0, 0, 2, 0, X]   
+0                       [0, 0, 0, 0, 0, 1, 0, 0, X]   
+0                       [1, 0, 0, 1, 1, 0, 1, 0, X]   
+0                       [4, 0, 1, 0, 0, 0, 0, 0, 2]   
+0                       [2, 1, 1, 0, 0, 2, 2, 0, X]   
+0                 [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 3, 1, X]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                    [0, 0, 0, 0, 0, 1, 0, 0, 0, 1]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                    [0, 0, 0, 0, 0, 1, 0, 0, 0, 1]   
+0                       [0, 0, 0, 0, 0, 1, 0, 2, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                 [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 3, 1, X]   
+0                       [3, 0, 0, 0, 0, 2, 0, 0, X]   
+0                       [2, 2, 0, 0, 1, 0, 0, 0, X]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 0]   
+0                       [2, 0, 0, 0, 0, 0, 0, 0, 3]   
+0                       [4, 0, 1, 0, 0, 0, 0, 0, 2]   
+0                       [2, 1, 1, 0, 0, 2, 2, 0, X]   
+0                       [1, 0, 1, 0, 0, 1, 0, 0, X]   
+0                       [0, 1, 2, 0, 0, 0, 0, 0, 0]   
+0  [0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0              [0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 1]   
+0                       [0, 0, 0, 1, 0, 0, 0, 0, 0]   
+0                       [1, 0, 0, 3, 0, 0, 0, 0, 0]   
+
+                          home_team_other_data              away_team  \
+0    {'runs': '5', 'hits': '7', 'errors': '0'}   San Francisco Giants   
+0   {'runs': '5', 'hits': '10', 'errors': '0'}   San Francisco Giants   
+0    {'runs': '1', 'hits': '7', 'errors': '0'}         Atlanta Braves   
+0   {'runs': '4', 'hits': '13', 'errors': '0'}         Atlanta Braves   
+0    {'runs': '4', 'hits': '6', 'errors': '0'}        Minnesota Twins   
+0   {'runs': '8', 'hits': '13', 'errors': '1'}        Minnesota Twins   
+0   {'runs': '3', 'hits': '10', 'errors': '1'}         Boston Red Sox   
+0  {'runs': '10', 'hits': '12', 'errors': '0'}         Boston Red Sox   
+0    {'runs': '1', 'hits': '6', 'errors': '1'}   Washington Nationals   
+0    {'runs': '4', 'hits': '8', 'errors': '0'}   Washington Nationals   
+0    {'runs': '3', 'hits': '6', 'errors': '0'}      Chicago White Sox   
+0   {'runs': '3', 'hits': '10', 'errors': '2'}      Chicago White Sox   
+0   {'runs': '4', 'hits': '10', 'errors': '1'}          Miami Marlins   
+0    {'runs': '3', 'hits': '6', 'errors': '0'}          Miami Marlins   
+0    {'runs': '4', 'hits': '7', 'errors': '0'}      Toronto Blue Jays   
+0    {'runs': '4', 'hits': '5', 'errors': '0'}      Toronto Blue Jays   
+0    {'runs': '3', 'hits': '5', 'errors': '4'}       Colorado Rockies   
+0   {'runs': '7', 'hits': '10', 'errors': '0'}       Colorado Rockies   
+0   {'runs': '3', 'hits': '10', 'errors': '1'}         Boston Red Sox   
+0  {'runs': '10', 'hits': '12', 'errors': '0'}         Boston Red Sox   
+0    {'runs': '3', 'hits': '5', 'errors': '4'}       Colorado Rockies   
+0   {'runs': '7', 'hits': '10', 'errors': '0'}       Colorado Rockies   
+0    {'runs': '5', 'hits': '9', 'errors': '2'}     Kansas City Royals   
+0    {'runs': '3', 'hits': '9', 'errors': '1'}     Kansas City Royals   
+0    {'runs': '5', 'hits': '9', 'errors': '2'}     Kansas City Royals   
+0    {'runs': '3', 'hits': '9', 'errors': '1'}     Kansas City Royals   
+0    {'runs': '3', 'hits': '5', 'errors': '3'}    Los Angeles Dodgers   
+0    {'runs': '0', 'hits': '3', 'errors': '2'}    Los Angeles Dodgers   
+0    {'runs': '1', 'hits': '4', 'errors': '0'}    St. Louis Cardinals   
+0   {'runs': '4', 'hits': '10', 'errors': '1'}          Miami Marlins   
+0   {'runs': '5', 'hits': '10', 'errors': '1'}    St. Louis Cardinals   
+0    {'runs': '6', 'hits': '8', 'errors': '0'}    St. Louis Cardinals   
+0    {'runs': '4', 'hits': '6', 'errors': '0'}        Minnesota Twins   
+0   {'runs': '8', 'hits': '13', 'errors': '1'}        Minnesota Twins   
+0    {'runs': '1', 'hits': '7', 'errors': '0'}         Atlanta Braves   
+0   {'runs': '4', 'hits': '13', 'errors': '0'}         Atlanta Braves   
+0   {'runs': '7', 'hits': '12', 'errors': '1'}       New York Yankees   
+0   {'runs': '8', 'hits': '10', 'errors': '1'}       New York Yankees   
+0    {'runs': '1', 'hits': '6', 'errors': '1'}       Seattle Mariners   
+0    {'runs': '4', 'hits': '7', 'errors': '0'}       Seattle Mariners   
+0    {'runs': '0', 'hits': '2', 'errors': '0'}  Philadelphia Phillies   
+0    {'runs': '2', 'hits': '6', 'errors': '1'}  Philadelphia Phillies   
+0    {'runs': '0', 'hits': '2', 'errors': '0'}  Philadelphia Phillies   
+0    {'runs': '2', 'hits': '6', 'errors': '1'}  Philadelphia Phillies   
+0    {'runs': '3', 'hits': '5', 'errors': '3'}    Los Angeles Dodgers   
+0    {'runs': '0', 'hits': '3', 'errors': '2'}    Los Angeles Dodgers   
+0    {'runs': '1', 'hits': '6', 'errors': '1'}       Seattle Mariners   
+0    {'runs': '4', 'hits': '7', 'errors': '0'}       Seattle Mariners   
+0    {'runs': '5', 'hits': '7', 'errors': '0'}   San Francisco Giants   
+0   {'runs': '5', 'hits': '10', 'errors': '0'}   San Francisco Giants   
+0    {'runs': '1', 'hits': '4', 'errors': '0'}    St. Louis Cardinals   
+0   {'runs': '5', 'hits': '10', 'errors': '1'}    St. Louis Cardinals   
+0   {'runs': '7', 'hits': '12', 'errors': '1'}       New York Yankees   
+0   {'runs': '8', 'hits': '10', 'errors': '1'}       New York Yankees   
+0    {'runs': '3', 'hits': '6', 'errors': '0'}      Chicago White Sox   
+0   {'runs': '3', 'hits': '10', 'errors': '2'}      Chicago White Sox   
+0    {'runs': '4', 'hits': '7', 'errors': '0'}      Toronto Blue Jays   
+0    {'runs': '4', 'hits': '5', 'errors': '0'}      Toronto Blue Jays   
+0    {'runs': '1', 'hits': '6', 'errors': '1'}   Washington Nationals   
+0    {'runs': '4', 'hits': '8', 'errors': '0'}   Washington Nationals   
+
+                             away_team_innings_data  \
+0                       [0, 0, 0, 0, 2, 1, 0, 0, 1]   
+0                       [0, 0, 0, 2, 0, 0, 2, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 2, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 2, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 1]   
+0                       [0, 0, 0, 2, 0, 0, 0, 5, 0]   
+0                       [0, 0, 0, 0, 0, 2, 0, 0, 0]   
+0                       [1, 0, 2, 0, 0, 0, 0, 0, 1]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 1, 3, 0, 2, 2, 0]   
+0  [0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3]   
+0              [0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 4]   
+0                       [0, 0, 3, 0, 0, 0, 0, 1, 1]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 3, 0, 0, 0, 0, 1, 1]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [2, 1, 0, 0, 1, 1, 0, 1, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [2, 1, 0, 0, 1, 1, 0, 1, 0]   
+0                       [0, 0, 0, 2, 1, 0, 0, 2, 0]   
+0                       [2, 0, 2, 0, 2, 0, 0, 0, 0]   
+0                       [2, 1, 0, 0, 0, 0, 0, 1, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 1, 4, 1, 0, 1, 1, 0, 3]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 0, 2, 0]   
+0                       [0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 2, 0, 0, 0, 0]   
+0                       [0, 2, 4, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 2, 0, 0, 0, 0, 4]   
+0                 [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 1, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 1, 0, 0]   
+0                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 0, 0, 0, 1, 0, 0]   
+0                    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 2, 1, 0, 0, 2, 0]   
+0                       [2, 0, 2, 0, 2, 0, 0, 0, 0]   
+0                 [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 2]   
+0                       [0, 0, 0, 0, 0, 0, 1, 0, 0]   
+0                       [0, 0, 0, 0, 2, 1, 0, 0, 1]   
+0                       [0, 0, 0, 2, 0, 0, 2, 0, 0]   
+0                       [2, 1, 0, 0, 0, 0, 0, 1, 0]   
+0                       [0, 1, 4, 1, 0, 1, 1, 0, 3]   
+0                       [0, 2, 4, 0, 0, 0, 0, 0, 0]   
+0                       [0, 0, 0, 2, 0, 0, 0, 0, 4]   
+0                       [0, 0, 0, 0, 0, 2, 0, 0, 0]   
+0                       [1, 0, 2, 0, 0, 0, 0, 0, 1]   
+0  [0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3]   
+0              [0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 4]   
+0                       [0, 0, 0, 0, 0, 0, 0, 1, 1]   
+0                       [0, 0, 0, 2, 0, 0, 0, 5, 0]   
+
+                          away_team_other_data team_side  result  blown_leads  \
+0   {'runs': '4', 'hits': '11', 'errors': '3'}      home    True            0   
+0    {'runs': '4', 'hits': '6', 'errors': '0'}      home    True            0   
+0    {'runs': '0', 'hits': '4', 'errors': '1'}      away   False            0   
+0    {'runs': '2', 'hits': '7', 'errors': '0'}      away   False            0   
+0    {'runs': '2', 'hits': '6', 'errors': '0'}      home    True            0   
+0    {'runs': '2', 'hits': '7', 'errors': '2'}      home    True            0   
+0    {'runs': '2', 'hits': '5', 'errors': '0'}      away   False            0   
+0    {'runs': '0', 'hits': '7', 'errors': '2'}      away   False            0   
+0    {'runs': '2', 'hits': '4', 'errors': '1'}      home   False            0   
+0   {'runs': '7', 'hits': '12', 'errors': '0'}      home   False            0   
+0    {'runs': '2', 'hits': '8', 'errors': '1'}      away   False            0   
+0    {'runs': '4', 'hits': '5', 'errors': '0'}      away    True            0   
+0    {'runs': '0', 'hits': '3', 'errors': '1'}      home    True            0   
+0   {'runs': '8', 'hits': '12', 'errors': '1'}      home   False            0   
+0   {'runs': '7', 'hits': '10', 'errors': '1'}      home   False            1   
+0    {'runs': '7', 'hits': '8', 'errors': '1'}      home   False            0   
+0    {'runs': '5', 'hits': '8', 'errors': '0'}      away    True            0   
+0    {'runs': '3', 'hits': '7', 'errors': '3'}      away   False            0   
+0    {'runs': '2', 'hits': '5', 'errors': '0'}      home    True            0   
+0    {'runs': '0', 'hits': '7', 'errors': '2'}      home    True            0   
+0    {'runs': '5', 'hits': '8', 'errors': '0'}      home   False            0   
+0    {'runs': '3', 'hits': '7', 'errors': '3'}      home    True            0   
+0    {'runs': '0', 'hits': '4', 'errors': '0'}      away   False            0   
+0   {'runs': '6', 'hits': '12', 'errors': '1'}      away    True            0   
+0    {'runs': '0', 'hits': '4', 'errors': '0'}      home    True            0   
+0   {'runs': '6', 'hits': '12', 'errors': '1'}      home   False            0   
+0    {'runs': '5', 'hits': '7', 'errors': '0'}      away    True            0   
+0   {'runs': '6', 'hits': '10', 'errors': '0'}      away    True            0   
+0   {'runs': '4', 'hits': '13', 'errors': '0'}      home   False            0   
+0    {'runs': '0', 'hits': '3', 'errors': '1'}      away   False            0   
+0  {'runs': '11', 'hits': '16', 'errors': '0'}      home   False            0   
+0    {'runs': '0', 'hits': '6', 'errors': '1'}      home    True            0   
+0    {'runs': '2', 'hits': '6', 'errors': '0'}      away   False            0   
+0    {'runs': '2', 'hits': '7', 'errors': '2'}      away   False            0   
+0    {'runs': '0', 'hits': '4', 'errors': '1'}      home    True            0   
+0    {'runs': '2', 'hits': '7', 'errors': '0'}      home    True            0   
+0    {'runs': '6', 'hits': '9', 'errors': '0'}      away   False            0   
+0    {'runs': '6', 'hits': '9', 'errors': '1'}      away   False            0   
+0    {'runs': '3', 'hits': '9', 'errors': '1'}      home   False            0   
+0    {'runs': '1', 'hits': '3', 'errors': '0'}      home    True            0   
+0    {'runs': '1', 'hits': '8', 'errors': '0'}      away    True            0   
+0    {'runs': '1', 'hits': '7', 'errors': '0'}      away   False            0   
+0    {'runs': '1', 'hits': '8', 'errors': '0'}      home   False            0   
+0    {'runs': '1', 'hits': '7', 'errors': '0'}      home    True            0   
+0    {'runs': '5', 'hits': '7', 'errors': '0'}      home   False            0   
+0   {'runs': '6', 'hits': '10', 'errors': '0'}      home   False            0   
+0    {'runs': '3', 'hits': '9', 'errors': '1'}      away    True            0   
+0    {'runs': '1', 'hits': '3', 'errors': '0'}      away   False            0   
+0   {'runs': '4', 'hits': '11', 'errors': '3'}      away   False            0   
+0    {'runs': '4', 'hits': '6', 'errors': '0'}      away   False            0   
+0   {'runs': '4', 'hits': '13', 'errors': '0'}      away    True            0   
+0  {'runs': '11', 'hits': '16', 'errors': '0'}      away    True            0   
+0    {'runs': '6', 'hits': '9', 'errors': '0'}      home    True            1   
+0    {'runs': '6', 'hits': '9', 'errors': '1'}      home    True            0   
+0    {'runs': '2', 'hits': '8', 'errors': '1'}      home    True            0   
+0    {'runs': '4', 'hits': '5', 'errors': '0'}      home   False            0   
+0   {'runs': '7', 'hits': '10', 'errors': '1'}      away    True            0   
+0    {'runs': '7', 'hits': '8', 'errors': '1'}      away    True            0   
+0    {'runs': '2', 'hits': '4', 'errors': '1'}      away    True            0   
+0   {'runs': '7', 'hits': '12', 'errors': '0'}      away    True            0   
+
+                     logger  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  
+0  <RootLogger root (INFO)>  

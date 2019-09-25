@@ -1,4 +1,3 @@
-# TODO: logging, Error handling, formatting, efficiency, clarity, comment code last
 from utils.mlb_project_config_utils import MlbTeamConfigUtils
 from utils.mlb_project_web_scraping_utils import MlbWebScrapingUtils
 import logging
