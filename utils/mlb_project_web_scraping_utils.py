@@ -107,25 +107,22 @@ class MlbWebScrapingUtils:
         box_scores_data_object = {}
 
         for team in box_score_urls:  # iterates through each key (team abbreviations) in the box_score_urls
-            teams_box_scores = {}
+            teams_box_scores_dict = {}
 
             # iterates through each team's 'season dictionaries' containing the box score urls for each season
             for team_urls_dict in box_score_urls[team]:
-
                 for season in team_urls_dict:
+
                     season_box_scores_dict = {}
-                    index = 0  # Delete
 
                     for box_score_url in team_urls_dict[season]:
                         self.logger.info(f'Collecting data for {team} {season} {box_score_url}')
-                        if index < 2:  # Delete
-                            box_score_id = self.__generate_box_score_id(box_score_url, team)  # a unique identifier for a box score
-                            season_box_scores_dict[box_score_id] = self.__get_box_score(box_score_url)  # collects the data from each box score, and stores it with the box score id in the season_box_scores_dict
-                        index += 1  # Delete
+                        box_score_id = self.__generate_box_score_id(box_score_url, team)  # a unique identifier for a box score
+                        season_box_scores_dict[box_score_id] = self.__get_box_score(box_score_url)  # collects the data from each box score, and stores it with the box score id in the season_box_scores_dict
 
-                    teams_box_scores[season] = season_box_scores_dict
+                    teams_box_scores_dict[season] = season_box_scores_dict
 
-            box_scores_data_object[team] = teams_box_scores
+            box_scores_data_object[team] = teams_box_scores_dict
 
         return box_scores_data_object
 
@@ -198,28 +195,65 @@ class MlbWebScrapingUtils:
         return box_score_id
 
     def __get_box_score(self, box_score_url):
+        """Scrapes the box score data from a baseball reference box score web page, and stores it in a nested JSON box score object.
+
+        Args:
+            box_score_url: the url to the baseball reference box score web page.
+
+        Returns:
+            A nested JSON object that stores all information from the box score. For example:
+
+            {
+                "home_team": {
+                    "team_name": "Arizona Diamondbacks",
+                    "inning_data": {
+                        "1": "3", "2": "0", "3": "0", "4": "0", "5": "0", "6": "2", "7": "0", "8": "0", "9": "X"
+                        },
+                    "other_box_score_data": {
+                        "runs": "5", "hits": "7", "errors": "0"
+                    }
+                },
+                "away_team": {
+                    "team_name": "San Francisco Giants",
+                    "inning_data": {
+                        "1": "0", "2": "0", "3": "0", "4": "0", "5": "2", "6": "1", "7": "0", "8": "0", "9": "1"
+                    },
+                    "other_box_score_data": {
+                        "runs": "4", "hits": "11", "errors": "3"
+                    }
+                }
+            }
+        """
+
+        # retrieves the html from a box score web page via a get request
         response_object = requests.get(box_score_url)
-        if response_object.status_code == 200:
+        response_text = response_object.text
+
+        if response_object.status_code == 200:  # if the get request is successful
             box_score = {}
-            response_text = response_object.text
+
+            # searches the box score web page's html for the box score object
             soup_object = BeautifulSoup(response_text, 'lxml')
             box_score_container = soup_object.find('table', {'class': 'linescore nohover stats_table no_freeze'})
             box_score_element = box_score_container.tbody
             box_score_rows = box_score_element.find_all('tr')
-            # away team
-            away_team_element = box_score_rows[0]
+
+            # finds all raw box score data for the away team
+            away_team_element = box_score_rows[0]  # collects the top line of the box score
             away_team_name = away_team_element.find_all('td')[1].text
-            away_team_inning_elements = away_team_element.find_all('td')[2:-3]
+            away_team_inning_elements = away_team_element.find_all('td')[2:-3]  # grabs all but the last three columns (which are not innings) in the top line of the box score
             away_team_inning_data = {}
             inning = 1
-            # collect away team inning data for all innings in a game
+
+            # collects the away team's inning data (number of runs scored) for all innings in a game
             for inning_element in away_team_inning_elements:
-                away_team_inning_data[str(inning)] = inning_element.text
+                away_team_inning_data[str(inning)] = inning_element.text  # stores data in a dictionary where keys are innings, and values are runs scored
                 inning += 1
-            # collect away team other box score data (runs, hits, errors)
+
+            # collects the away team's other box score data (runs, hits, errors)
             away_team_other_box_score_data = {}
             index = 0
-            for data_element in away_team_element.find_all('td')[-3:]:
+            for data_element in away_team_element.find_all('td')[-3:]:  # iterates through the last three columns in the box score
                 if index == 0:
                     away_team_other_box_score_data['runs'] = data_element.text
                 elif index == 1:
@@ -227,21 +261,24 @@ class MlbWebScrapingUtils:
                 elif index == 2:
                     away_team_other_box_score_data['errors'] = data_element.text
                 index += 1
-            # home team
-            home_team_element = box_score_rows[1]
+
+            # finds all raw box score data for the home team
+            home_team_element = box_score_rows[1]  # collects the bottom line of the box score
             home_team_name = home_team_element.find_all('td')[1].text
-            home_team_inning_elements = home_team_element.find_all('td')[2:-3]
+            home_team_inning_elements = home_team_element.find_all('td')[2:-3]  # grabs all but the last three columns (which are not innings) in the bottom line of the box score
             home_team_inning_data = {}
             inning = 1
-            # collect home team inning data for all innings in a game
+
+            # collects the home team's inning data (number of runs scored) for all innings in a game
             for inning_element in home_team_inning_elements:
-                home_team_inning_data[str(inning)] = inning_element.text
+                home_team_inning_data[str(inning)] = inning_element.text  # stores data in a dictionary where keys are innings, and values are runs scored
                 inning += 1
+
             # collect home team other box score data (runs, hits, errors)
             home_team_other_data_elements = home_team_element.find_all('td')[-3:]
             home_team_other_box_score_data = {}
             index = 0
-            for data_element in home_team_other_data_elements:
+            for data_element in home_team_other_data_elements:  # iterates through the last three columns in the box score
                 if index == 0:
                     home_team_other_box_score_data['runs'] = data_element.text
                 elif index == 1:
@@ -249,7 +286,8 @@ class MlbWebScrapingUtils:
                 elif index == 2:
                     home_team_other_box_score_data['errors'] = data_element.text
                 index += 1
-            # organize data into box score
+
+            # stores the data into a single box score JSON object
             home_team_box_score = {}
             home_team_box_score['team_name'] = home_team_name
             home_team_box_score['inning_data'] = home_team_inning_data
@@ -260,6 +298,11 @@ class MlbWebScrapingUtils:
             away_team_box_score['other_box_score_data'] = away_team_other_box_score_data
             box_score['home_team'] = home_team_box_score
             box_score['away_team'] = away_team_box_score
+
+        else:  # if the get request is unsuccessful
+            self.logger.error(f'Unexected error collecting box score data. Response object returned with non-200 status code: {response_object.status_code}')
+            sys.exit()  # terminates the program
+
         return box_score
 
     def __get_box_score_urls(self, season_home_page_url, box_score_base_url):

@@ -9,9 +9,8 @@ logging.basicConfig(format='%(asctime)s - %(filename)s - %(module)s - %(lineno)d
                     level=logging.INFO)
 logger = logging.getLogger()
 logger.info('STARTING: Data Collection')
-years = [2012]
-# years = [2012, 2013]
-# years = [2012, 2013, 2014, 2015, 2016, 2017, 2018]
+
+years = [2012, 2013, 2014, 2015, 2016, 2017, 2018]
 
 # collects team abbreviations
 logger.info('STARTING: Collecting team abbreviations')
@@ -36,7 +35,7 @@ logger.info(f'STARTING: Collecting box score data for each team for seasons {yea
 box_scores = web_scraper.collect_box_scores(box_score_urls)
 logger.info(f'FINISHED: Collecting box score data for each team for seasons {years[0]}-{years[-1]}')
 
-# # write the box score data to a datafile
-# logger.info('Outputting collected box score data')
-# web_scraper.output_box_score_data(box_scores, 'data/box_score_data.json')
-# logger.info('FINISHED: Data Collection')
+# write the box score data to a datafile
+logger.info('Outputting collected box score data')
+web_scraper.output_box_score_data(box_scores, 'data/box_score_data.json')
+logger.info('FINISHED: Data Collection')
