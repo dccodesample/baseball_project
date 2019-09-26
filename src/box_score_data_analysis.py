@@ -18,149 +18,84 @@ logger.info('STARTING: Data Analysis')
 
 # collects box score data
 logger.info('STARTING: Collecting box score data')
-data_analysis_utils_object = BoxScoreDataAnalysisUtils('data/box_score_data_medium.json')
+data_analysis_utils_object = BoxScoreDataAnalysisUtils('data/box_score_data_small.json')
 box_score_data = data_analysis_utils_object.get_box_score_data()
 logger.info('FINISHED: Collecting box score data')
 
 # converting box score data to Box Score objects and storing the objects in a pandas data frame
 logger.info('STARTING: Converting to Box Score objects and storing in a pandas dataframe')
 box_score_data_frame = data_analysis_utils_object.convert_box_score_data_to_dataframe(box_score_data)
-with pd.option_context('display.max_columns', 2000):
-    with open('test_file.txt', 'w') as f:
-        f.write(str(box_score_data_frame))
+# with pd.option_context('display.max_columns', 2000):  # DELETE
+#     with open('test_file.txt', 'w') as f:  # DELETE
+#         f.write(str(box_score_data_frame))  # DELETE
 logger.info('FINISHED: Converting to Box Score objects and storing in a pandas dataframe')
 
+# Calculating the number of seasons in the data frame
+logger.info('STARTING: Calculating the number of seasons in the data frame')
+seasons = data_analysis_utils_object.calculate_seasons(box_score_data_frame)
+logger.info('FINISHED: Calculating the number of seasons in the data frame')
 
+# Calculating the number of total blown leads per team
+logger.info('STARTING: Preparing total blown leads data')
+blown_leads_total_data = data_analysis_utils_object.calculate_total_blown_leads(box_score_data_frame)
+logger.info('FINISHED: Preparing total blown leads data')
 
+# Creating a bar chart of total blown leads per team
+logger.info('STARTING: Charting total blown leads data (bar chart)')
+blown_leads_total_data_frame = data_analysis_utils_object.plot_total_blown_leads_bar_chart(blown_leads_total_data, seasons)
+logger.info('FINISHED: Charting total blown leads data (bar chart)')
 
-# def calculate_y_ticks(y_axis_max):
-#     y_ticks = []
-#     for number in range(y_axis_max + 10):
-#         if number % 10 == 0:
-#             y_ticks.append(number)
-#     return y_ticks
+# Calculating the number of blown leads per team for each season
+logger.info('STARTING: Preparing total blown leads for each team and season data')
+blown_leads_per_team_season_data_frame = data_analysis_utils_object.calculate_total_blown_leads_per_team_season(box_score_data_frame, seasons)
+logger.info('FINISHED: Preparing total blown leads for each team and season data')
 
+# Creating a bar chart of the most blown leads by any team in a season
+logger.info('STARTING: Charting the most blown leads by any team in a season (bar chart)')
+blown_leads_total_data_frame = data_analysis_utils_object.plot_most_blown_leads_per_team_season_bar_chart(blown_leads_per_team_season_data_frame, seasons)
+logger.info('FINISHED: Charting the most blown leads by any team in a season (bar chart)')
 
-# box_score_data_frame = pd.DataFrame()
-# for team in box_score_data:
-#     for season in box_score_data[team]:
-#         for box_score_id in box_score_data[team][season]:
-#             box_score_raw = box_score_data[team][season][box_score_id]
-#             box_score = BoxScore(box_score_raw, box_score_id, season, team)
+# Calculating the maximum and minimum number of blown leads by a team over the study period
+logger.info('STARTING: Preparing maximum and minimum number of blown leads for all seasons data')
+max_blow_leads_total = data_analysis_utils_object.calculate_max_blown_leads_total(box_score_data_frame)
+max_blow_leads_total_data_frame = data_analysis_utils_object.create_max_blown_leads_tota_data_frame(box_score_data_frame, max_blow_leads_total)  # finds the name of the team who had the maximum number of blown leads
+min_blow_leads_total = data_analysis_utils_object.calculate_min_blown_leads_total(box_score_data_frame)
+min_blow_leads_total_data_frame = data_analysis_utils_object.create_min_blown_leads_tota_data_frame(box_score_data_frame, min_blow_leads_total)  # finds the name of the team who had the minimum number of blown leads
+logger.info('FINISHED: Preparing maximum and minimum number of blown leads for all seasons data')
 
-#             columns = list(box_score.__dict__.keys())
-#             values = list(box_score.__dict__.values())
-#             temp_data_frame = pd.DataFrame([values], columns=columns)
-#             box_score_data_frame = box_score_data_frame.append(temp_data_frame)
+# Calculating the maximum and minimum number of blown leads by a team for each season
+logger.info('STARTING: Preparing maximum and minimum number of blown leads for each season data')
+max_blown_leads_per_season = data_analysis_utils_object.calculate_max_blown_leads_per_season(box_score_data_frame, seasons)
+max_blown_leads_per_season_data_frame = data_analysis_utils_object.create_max_blown_leads_per_season_data_frame(box_score_data_frame, max_blown_leads_per_season, seasons)
+min_blown_leads_per_season = data_analysis_utils_object.calculate_min_blown_leads_per_season(box_score_data_frame, seasons)
+min_blown_leads_per_season_data_frame = data_analysis_utils_object.create_min_blown_leads_per_season_data_frame(box_score_data_frame, min_blown_leads_per_season, seasons)
+logger.info('FINISHED: Preparing maximum and minimum number of blown leads for each season data')
 
-# # number of total blown leads per team
-# seasons = box_score_data_frame['season'].unique()
-# aggregation_function = {'blown_leads': 'sum'}
+# mean, median, mode, range of blown leads for the league
+blown_leads_all_seasons_dict = {}
+blown_leads_all_seasons_dict['mean'] = blown_leads_total_data['blown_leads'].mean()
+blown_leads_all_seasons_dict['mode'] = blown_leads_total_data['blown_leads'].mode()[0]
+blown_leads_all_seasons_dict['median'] = blown_leads_total_data['blown_leads'].median()
+blown_leads_total_data_plot = blown_leads_total_data.plot(kind='box')
+blown_leads_total_data_plot.spines['right'].set_visible(False)
+blown_leads_total_data_plot.spines['top'].set_visible(False)
+blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['left'].set_linewidth(1)
+blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
+blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
+plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+plt.xlabel('All Teams', labelpad=10, fontsize=12)
+# hide the x tick label
+blown_leads_total_data_plot.set_xticklabels('')
+plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+y_ticks = calculate_y_ticks(blown_leads_total_data['blown_leads'].max())
 
-# blown_leads_total_data = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
-# blown_leads_total_data = blown_leads_total_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
-
-
-# blown_leads_total_data_plot = blown_leads_total_data.plot(kind='bar')
-# blown_leads_total_data_plot.spines['right'].set_visible(False)
-# blown_leads_total_data_plot.spines['top'].set_visible(False)
-# blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
-# blown_leads_total_data_plot.spines['left'].set_linewidth(1)
-# blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
-# blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
-# plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
-# plt.xlabel('Teams', labelpad=10, fontsize=12)
-# plt.ylabel('Blown\nLeads', rotation=0, labelpad=40, fontsize=12)
-# y_ticks = calculate_y_ticks(blown_leads_total_data['blown_leads'].max())
-# plt.yticks(y_ticks, fontsize=8)
-# plt.xticks(fontsize=8)
-# plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
-# plt.subplots_adjust(right=0.5)
-# plt.tight_layout()
-# plt.savefig('results/blown_leads_total_data_bar_chart.png')
-
-
-# # number of total blown leads per team per season
-# seasons = box_score_data_frame['season'].unique()
-# blown_leads_all_seasons_data = pd.DataFrame()
-
-# for season in seasons:
-#     blown_leads_single_season = box_score_data_frame.where(box_score_data_frame['season'] == season).dropna()
-#     blown_leads_single_season['team_abbrv'] = blown_leads_single_season['team_abbrv'].apply(lambda x: f'{x} {season}')
-#     aggregation_function = {'blown_leads': 'sum'}
-#     blown_leads_single_season = blown_leads_single_season.groupby('team_abbrv').aggregate(aggregation_function)
-#     blown_leads_all_seasons_data = blown_leads_all_seasons_data.append(blown_leads_single_season)
-
-# blown_leads_all_seasons_data = blown_leads_all_seasons_data.sort_values(by=['blown_leads', 'team_abbrv'], ascending=[False, True])
-# # find and plot the worst 10 team seasons for blown leads
-# worst_blown_lead_seasons_data = blown_leads_all_seasons_data.iloc[0:10]
-# worst_blown_lead_seasons_plot = worst_blown_lead_seasons_data.plot(kind='bar')
-# worst_blown_lead_seasons_plot.spines['right'].set_visible(False)
-# worst_blown_lead_seasons_plot.spines['top'].set_visible(False)
-# worst_blown_lead_seasons_plot.spines['left'].set_edgecolor('0.5')
-# worst_blown_lead_seasons_plot.spines['left'].set_linewidth(1)
-# worst_blown_lead_seasons_plot.spines['bottom'].set_edgecolor('0.5')
-# worst_blown_lead_seasons_plot.spines['bottom'].set_linewidth(1)
-# plt.title(f'Most Blown Leads\nin a Season: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
-# plt.xlabel('Teams', labelpad=10, fontsize=12)
-# plt.ylabel('Blown\nLeads', rotation=0, labelpad=40, fontsize=12)
-# y_ticks = calculate_y_ticks(int(worst_blown_lead_seasons_data['blown_leads'].max()))
-# plt.yticks(y_ticks, fontsize=8)
-# plt.xticks(fontsize=8, rotation=45)
-# plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
-# plt.subplots_adjust(right=0.5)
-# plt.tight_layout()
-# plt.savefig('results/most_blown_leads_in_a_season_bar.png')
-
-# # range of blown leads for the league (with team id)
-# aggregation_function = {'blown_leads': 'sum'}
-# max_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
-# max_blown_leads_total = max_blown_leads_total_data_frame['blown_leads'].max()
-# max_blown_leads_total_data_frame = max_blown_leads_total_data_frame.where(max_blown_leads_total_data_frame['blown_leads'] == max_blown_leads_total).dropna()
-# min_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
-# min_blown_leads_total = min_blown_leads_total_data_frame['blown_leads'].min()
-# min_blown_leads_total_data_frame = min_blown_leads_total_data_frame.where(min_blown_leads_total_data_frame['blown_leads'] == min_blown_leads_total).dropna()
-
-# # range of blown leads for the league (with team id) per season
-# seasons = box_score_data_frame['season'].unique()
-# max_blown_leads_all_seasons = pd.DataFrame()
-# min_blown_leads_all_seasons = pd.DataFrame()
-# for season in seasons:
-#     season_data_frame = box_score_data_frame.where(box_score_data_frame['season'] == season)
-#     aggregation_function = {'blown_leads': 'sum'}
-#     season_data_frame = season_data_frame.groupby(['team_abbrv', 'season']).aggregate(aggregation_function)
-#     max_blown_leads_season = season_data_frame['blown_leads'].max()
-#     min_blown_leads_season = season_data_frame['blown_leads'].min()
-#     max_blown_leads_data = season_data_frame.where(season_data_frame['blown_leads'] == max_blown_leads_season).dropna()
-#     min_blown_leads_data = season_data_frame.where(season_data_frame['blown_leads'] == min_blown_leads_season).dropna()
-#     max_blown_leads_all_seasons = max_blown_leads_all_seasons.append(max_blown_leads_data)
-#     min_blown_leads_all_seasons = min_blown_leads_all_seasons.append(min_blown_leads_data)
-
-# # mean, median, mode, range of blown leads for the league
-# blown_leads_all_seasons_dict = {}
-# blown_leads_all_seasons_dict['mean'] = blown_leads_total_data['blown_leads'].mean()
-# blown_leads_all_seasons_dict['mode'] = blown_leads_total_data['blown_leads'].mode()[0]
-# blown_leads_all_seasons_dict['median'] = blown_leads_total_data['blown_leads'].median()
-# blown_leads_total_data_plot = blown_leads_total_data.plot(kind='box')
-# blown_leads_total_data_plot.spines['right'].set_visible(False)
-# blown_leads_total_data_plot.spines['top'].set_visible(False)
-# blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
-# blown_leads_total_data_plot.spines['left'].set_linewidth(1)
-# blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
-# blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
-# plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
-# plt.xlabel('All Teams', labelpad=10, fontsize=12)
-# # hide the x tick label
-# blown_leads_total_data_plot.set_xticklabels('')
-# plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
-# y_ticks = calculate_y_ticks(blown_leads_total_data['blown_leads'].max())
-
-# plt.yticks(y_ticks, fontsize=8)
-# plt.xticks(fontsize=8)
-# plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
-# plt.subplots_adjust(right=0.5)
-# plt.tight_layout()
-# plt.savefig('results/blown_leads_total_data_box_plot.png')
+plt.yticks(y_ticks, fontsize=8)
+plt.xticks(fontsize=8)
+plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+plt.subplots_adjust(right=0.5)
+plt.tight_layout()
+plt.savefig('results/blown_leads_total_data_box_plot.png')
 
 # # mean, median, mode, range of blown leads for the league per season
 # seasons = list(box_score_data_frame['season'].unique())
@@ -208,6 +143,8 @@ logger.info('FINISHED: Converting to Box Score objects and storing in a pandas d
 # plt.subplots_adjust(right=0.5)
 # plt.tight_layout()
 # plt.savefig('results/blown_leads_per_season_box_plot.png')
+
+# GET TO HERE
 
 # # mean, median, mode, range of blown leads for STL
 # stl_blown_leads_data = pd.DataFrame(blown_leads_per_season_data.loc['STL'])

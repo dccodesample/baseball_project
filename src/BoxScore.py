@@ -3,14 +3,14 @@ import logging
 import sys
 logging.basicConfig(format='%(asctime)s - %(filename)s - %(module)s - %(lineno)d - %(levelname)s - %(message)s',
                     level=logging.INFO)
+logger = logging.getLogger()
 
 
 class BoxScore:
     """
-    An class representing 1) a box score, and 2) containing requisite information that will be needed to complete data analysis.
+    An class representing 1) a box score, and 2) containing requisite information that will be needed to complete data analysis on blown leads.
 
     Attributes:
-        self.logger: python logging object
 
         self.team_abbrv: the abbreviation for the team the box score belongs to (e.g., ARI)
         self.team_name: the full name for the team
@@ -39,8 +39,6 @@ class BoxScore:
             season: the season number for the box score (e.g., 2012).
             team_abbrv: the team abbreviation for the team the box score belongs to.
         """
-
-        self.logger = logging.getLogger()
 
         self.team_abbrv = team_abbrv
         self.team_name = self.get_team_name()
@@ -118,7 +116,7 @@ class BoxScore:
                     inning_away_team_run_differential = 0 - int(inning_data[index - 1])
                     away_team_run_differentials.append(inning_away_team_run_differential)
 
-                self.logger.debug(f'Index Error: {e}')
+                logger.debug(f'Index Error: {e}')
 
         away_team_run_differntial_running_total = 0
         lead = False
@@ -202,7 +200,7 @@ class BoxScore:
                 return team_name_data[team]
 
         # terminates the program if it cannot find the team's full name
-        self.logger.error('Could not find team abbreviation "{self.team_abbrv}" in the mlb config data file located here: {mlb_config_data_path}')
+        logger.error('Could not find team abbreviation "{self.team_abbrv}" in the mlb config data file located here: {mlb_config_data_path}')
         sys.exit()
 
     def get_team_side(self):
