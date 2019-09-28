@@ -441,3 +441,39 @@ class BoxScoreDataAnalysisUtils:
 
         # outputs the plot
         plt.savefig('results/blown_leads_total_data_bar_chart.png')
+
+    def plot_total_blown_leads_box_plot(self, blown_leads_total_data_frame, seasons):
+        """Creates a box plot of the total number of blown leads per team.
+
+        Args:
+            blown_leads_total_data_frame: the dataframe containing the number of blown leads belonging to each team (producded in the calculate_total_blown_leads method)
+            seasons: a list the number of seasons in the study
+
+        Returns:
+            Technically nothing, but it creates a png file with a box plot of the total blown leads per team
+        """
+
+        blown_leads_total_data_plot = blown_leads_total_data_frame.plot(kind='bar')  # creates the plot object
+
+        # configures the chart borders
+        blown_leads_total_data_plot.spines['right'].set_visible(False)
+        blown_leads_total_data_plot.spines['top'].set_visible(False)
+        blown_leads_total_data_plot.spines['left'].set_edgecolor('0.5')
+        blown_leads_total_data_plot.spines['left'].set_linewidth(1)
+        blown_leads_total_data_plot.spines['bottom'].set_edgecolor('0.5')
+        blown_leads_total_data_plot.spines['bottom'].set_linewidth(1)
+
+        # configures the chart title, axis labels, axis ticks, grid, and spacing
+        plt.title(f'Total Blown Leads: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+        plt.xlabel('All Teams', labelpad=10, fontsize=12)
+        blown_leads_total_data_plot.set_xticklabels('')  # hides the x tick label
+        plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+        y_ticks = self.calculate_y_ticks(blown_leads_total_data_frame['blown_leads'].max())
+        plt.yticks(y_ticks, fontsize=8)
+        plt.xticks(fontsize=8)
+        plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+        plt.subplots_adjust(right=0.5)
+        plt.tight_layout()
+
+        # outputs the plot
+        plt.savefig('results/blown_leads_total_data_box_plot.png')
