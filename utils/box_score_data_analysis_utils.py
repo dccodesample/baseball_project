@@ -1,5 +1,6 @@
 import json
 import pandas as pd
+import statistics
 from matplotlib import pyplot as plt
 from src.BoxScore import BoxScore
 plt.rcParams["font.family"] = "Verdana"
@@ -9,11 +10,158 @@ class BoxScoreDataAnalysisUtils:
     def __init__(self, box_score_data_uri):
         self.box_score_data_uri = box_score_data_uri
 
-    def calculate_seasons(self, box_score_data_frame):
-        """Finds the number of seasons in the dataframe (i.e., the number of seasons in the study)."""
+    def calcuate_blown_lead_descriptive_stats_per_season(self, blown_leads_per_season_data_frame):
+        """Calculates the mean, median, and mode of blown leads for each season, and stores the data in a dictionary.
 
-        seasons = box_score_data_frame['season'].unique()
+        Args:
+            blown_leads_per_season_data_frame: the data frame containing the number of blown leads per team for each season, as created in the create_blown_leads_per_season_data_frame method
+
+        Returns:
+            Returns a dictionary, mapping each season to the mean, median, and mode for that year. For example:
+
+            {
+            '2012': {
+                'mean': 0.1, 'mode': 0.0, 'median': 0.0
+                },
+            '2013': {
+                'mean': 0.1, 'mode': 0.0, 'median': 0.0
+                }
+            }
+        """
+
+        blown_leads_per_season_dict = {}  # the dictionary which will store the mean, median, and mode for all seasons
+        index = 0
+
+        for column in blown_leads_per_season_data_frame:
+            season = column[-4:]  # finds the season number
+
+            season_stats_dict = {}  # the season dictionary, which will store the mean, median, and mode for the season
+
+            # calculates the mean, median, and mode for the season
+            mean_blown_leads = blown_leads_per_season_data_frame[column].mean()
+            mode_blown_leads = blown_leads_per_season_data_frame[column].mode()[0]
+            median_blown_leads = blown_leads_per_season_data_frame[column].median()
+
+            # stores the data for the season
+            season_stats_dict['mean'] = mean_blown_leads
+            season_stats_dict['mode'] = mode_blown_leads
+            season_stats_dict['median'] = median_blown_leads
+            blown_leads_per_season_dict[season] = season_stats_dict
+
+            index += 1
+
+        return blown_leads_per_season_dict
+
+    def calculate_seasons(self, box_score_data_frame):
+        """Finds the number of seasons in the dataframe (i.e., the number of seasons in the study).
+
+        Args:
+            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
+
+        Returns:
+            Returns a list of the seasons in the study. For example,
+
+            [2012, 2013]
+        """
+
+        seasons = list(box_score_data_frame['season'].unique())
         return seasons
+
+    def calcuate_blown_lead_descriptive_stats_stl(self, blown_leads_stl_data_frame):
+        """Calcuates descriptive statistics (range, mean, median, mode) on the blown leads data for the St. Louis Cardinals.
+
+        Args:
+            stl_blown_leads_data_frame: the data frame containing the number of blown leads per from each season for the St. Louis Cardinals
+
+        Returns:
+            Returns a dictionary containing the maximum, minimum, mean, median, and mode of the blown leads data for the St. Louis Cardinals.
+            For example:
+
+            {'maximum': {'Blown Leads 2012': 1}, 'minimum': {'Blown Leads 2012': 1}, 'mean': 1, 'mode': array([[1.]]), 'median': 1}
+
+        """
+        stl_blown_leads_stats_dict = {}  # the dictionary that will store the descriptive statistics
+
+        # calcuates the maximum number of blown leads in a season
+        blown_leads_max = int(blown_leads_stl_data_frame.max())
+        blown_leads_max_season = blown_leads_stl_data_frame.idxmax()[0]
+        stl_blown_leads_stats_dict['maximum'] = {blown_leads_max_season: blown_leads_max}
+
+        # calcuates the minimum number of blown leads in a season
+        blown_leads_min = int(blown_leads_stl_data_frame.min())
+        blown_leads_min_season = blown_leads_stl_data_frame.idxmin()[0]
+        stl_blown_leads_stats_dict['minimum'] = {blown_leads_min_season: blown_leads_min}
+
+        # calcuates the mean, median, and mode number of blown leads in a season
+        stl_blown_leads_stats_dict['mean'] = int(blown_leads_stl_data_frame.mean())
+        stl_blown_leads_stats_dict['mode'] = blown_leads_stl_data_frame.mode().values
+        stl_blown_leads_stats_dict['median'] = int(blown_leads_stl_data_frame.median())
+
+        return stl_blown_leads_stats_dict
+
+    def calcuate_blown_lead_losses_descriptive_stats_stl(self, blown_lead_losses_stl_data_frame, seasons):
+        """Calculates descriptive statistics on the number of games where the St. Louis Cardinals blew a lead and lost, for each season in the study period.
+
+        Args:
+            blown_lead_losses_stl_data_frame: a dataframe containing descriptive information on the games where the St. Louis Cardinals blew a lead and lost
+            seasons: a list the number of seasons in the study
+
+        Returns:
+            Returns a dictionary with descriptive statistics on the number of blown lead losses for the St. Louis Cardinals across the study period.
+            For example:
+
+                {
+                    'total': 2,
+                    'mean': 1.0,
+                    'seasons': {
+                        '2012': 1.0,
+                        '2013': 1.0
+                    }
+                }
+        """
+
+        stl_blown_leads_all_seasons_data_dict = {}  # the dicionary that will hold the all the statistics for all seasons
+        stl_blown_leads_lead_losses_per_season = {}  # sub-dictionary which holds the number of blown lead losses for each season
+
+        stl_blown_leads_lead_losses_total = len(blown_lead_losses_stl_data_frame.index)
+
+        for season in seasons:
+            # collects data for the given season
+            stl_blown_leads_single_season_data = blown_lead_losses_stl_data_frame.where(blown_lead_losses_stl_data_frame['season'] == season).dropna()
+
+            # calculates the number of blown lead losses for the season
+            aggregation_function = {'blown_leads': 'sum'}
+            stl_blown_leads_single_season_data = stl_blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)
+
+            # stores the results in the respoective dictionaries
+            stl_blown_leads_single_season = list(stl_blown_leads_single_season_data.iloc[0])[0]
+            stl_blown_leads_lead_losses_per_season[season] = stl_blown_leads_single_season
+
+        # calculates the mean number of blown lead losses across all seasons
+        stl_blown_lead_losses_total_mean = list(stl_blown_leads_lead_losses_per_season.values())
+        stl_blown_lead_losses_total_mean = statistics.mean(stl_blown_lead_losses_total_mean)
+
+        # stores the data
+        stl_blown_leads_all_seasons_data_dict['total'] = stl_blown_leads_lead_losses_total
+        stl_blown_leads_all_seasons_data_dict['mean'] = stl_blown_lead_losses_total_mean
+        stl_blown_leads_all_seasons_data_dict['seasons'] = stl_blown_leads_lead_losses_per_season
+
+        return stl_blown_leads_all_seasons_data_dict
+
+    def calculate_team_abbrvs(self, box_score_data_frame):
+        """Finds the team abbreviations in the dataframe.
+
+        Args:
+            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
+
+        Returns:
+            Returns a list of the team abbreviations in the study. For example,
+
+            ['ARI', 'ATL', 'BAL']
+        """
+
+        team_abbrvs = list(box_score_data_frame['team_abbrv'].unique())
+        return team_abbrvs
 
     def calculate_max_blown_leads_per_season(self, box_score_data_frame, seasons):
         """Calculates the largerst number of leads a team blew for each season.
@@ -230,12 +378,37 @@ class BoxScoreDataAnalysisUtils:
 
         return box_score_data_frame
 
-    def get_box_score_data(self):
-        """Reads the box score data from a JSON file, stores it in a nested JSON object, and returns the object."""
+    def create_blown_leads_per_season_data_frame(self, box_score_data_frame, seasons, team_abbrvs):
+        """Collects the number of blown leads per team for each season. 
 
-        with open(self.box_score_data_uri, 'r') as f:
-            box_score_data = json.load(f)
-            return box_score_data
+        Args:
+            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
+            seasons: a list the number of seasons in the study
+            team_abbrvs: the list of team abbreviations in the box score data frame, as calculated in the calculate_team_abbrvs method
+
+        Returns:
+            Returns a pandas dataframe where the indexes are team names, and the columns are blown lead totals for each season. For example:
+
+                        Blown Leads 2012  Blown Leads 2013
+            ARI               0.0               0.0
+            ATL               0.0               0.0
+            BAL               0.0               1.0
+        """
+
+        blown_leads_per_season_data = pd.DataFrame(index=team_abbrvs)  # the data frame that will store the blown leads data for each season
+
+        for season in seasons:
+            blown_leads_single_season_data = box_score_data_frame.where(box_score_data_frame['season'] == season).dropna()  # isolates data for the specific season
+
+            # collects blown leads for each team in the season
+            aggregation_function = {'blown_leads': 'sum'}
+            blown_leads_single_season_data = blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)  # creates a new data frame containin the season data
+
+            blown_leads_single_season_data = blown_leads_single_season_data.rename(columns={'blown_leads': f'Blown Leads {season}'})  # renames the blown leads column to include the season number
+
+            blown_leads_per_season_data = blown_leads_per_season_data.merge(blown_leads_single_season_data, left_index=True, right_index=True)  # appends the season data frame to the data frame for all seasons
+
+        return blown_leads_per_season_data
 
     def create_max_blown_leads_per_season_data_frame(self, box_score_data_frame, max_blown_leads_per_season, seasons):
         """Finds the names of the teams who blew the most leads for each season.
@@ -369,6 +542,13 @@ class BoxScoreDataAnalysisUtils:
 
         return min_blown_leads_total_data_frame
 
+    def get_box_score_data(self):
+        """Reads the box score data from a JSON file, stores it in a nested JSON object, and returns the object."""
+
+        with open(self.box_score_data_uri, 'r') as f:
+            box_score_data = json.load(f)
+            return box_score_data
+
     def plot_most_blown_leads_per_team_season_bar_chart(self, blown_leads_per_team_season_data_frame, seasons):
         """Creates a bar chart of the top 10 most blown leads for a team in a season, across the study period.
 
@@ -406,6 +586,80 @@ class BoxScoreDataAnalysisUtils:
 
         # outputs the plot
         plt.savefig('results/most_blown_leads_in_a_season_bar.png')
+
+    def plot_per_season_blown_leads_box_plot(self, blown_leads_per_season_data_frame, seasons):
+        """Creates a box plot of the number of blown leads per team for each season.
+
+        Args:
+            blown_leads_per_season_data_frame: the data frame containing the number of blown leads per team for each season, as created in the create_blown_leads_per_season_data_frame method
+
+        Returns:
+            Technically nothing, but it creates a png file with a box plot of the number of blown leads per team for each season
+        """
+
+        blown_leads_per_season_data_plot = blown_leads_per_season_data_frame.plot(kind='box')  # creates the plot object
+
+        # configures the chart borders
+        blown_leads_per_season_data_plot.spines['right'].set_visible(False)
+        blown_leads_per_season_data_plot.spines['top'].set_visible(False)
+        blown_leads_per_season_data_plot.spines['left'].set_edgecolor('0.5')
+        blown_leads_per_season_data_plot.spines['left'].set_linewidth(1)
+        blown_leads_per_season_data_plot.spines['bottom'].set_edgecolor('0.5')
+        blown_leads_per_season_data_plot.spines['bottom'].set_linewidth(1)
+
+        # configures the chart title, axis labels, axis ticks, grid, and spacing
+        plt.title(f'Total Blown Leads\nfor each Season: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+        plt.xlabel('Seasons', labelpad=10, fontsize=12)
+        blown_leads_per_season_data_plot.set_xticklabels(seasons)
+        plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+        max_blown_leads_per_season_list = []
+        for season in seasons:
+            max_blown_leads_per_season_list.append(blown_leads_per_season_data_frame[f'Blown Leads {season}'].max())
+        max_blown_leads_per_season = int(max(max_blown_leads_per_season_list))
+        y_ticks = self.calculate_y_ticks(max_blown_leads_per_season)
+        plt.yticks(y_ticks, fontsize=8)
+        plt.xticks(fontsize=8)
+        plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+        plt.subplots_adjust(right=0.5)
+        plt.tight_layout()
+
+        # outputs the plot
+        plt.savefig('results/blown_leads_per_season_box_plot.png')
+
+    def plot_stl_blown_leads_box_plot(self, blown_leads_stl_data_frame, seasons):
+        """Creates a box plot of the blown leads for the St. Louis Cardinals for each season.
+
+        Args:
+            blown_leads_stl_data_frame: the data frame containing the number of blown leads per from each season for the St. Louis Cardinals
+            seasons: a list the number of seasons in the study
+
+        Returns:
+            Technically nothing, but it creates a png file with a box plot of the blown leads for the St. Louis Cardinals for each season
+        """
+
+        stl_blown_leads_data_plot = blown_leads_stl_data_frame.plot(kind='box')  # creates the plot object
+
+        # configures the chart borders
+        stl_blown_leads_data_plot.spines['right'].set_visible(False)
+        stl_blown_leads_data_plot.spines['top'].set_visible(False)
+        stl_blown_leads_data_plot.spines['left'].set_edgecolor('0.5')
+        stl_blown_leads_data_plot.spines['left'].set_linewidth(1)
+        stl_blown_leads_data_plot.spines['bottom'].set_edgecolor('0.5')
+        stl_blown_leads_data_plot.spines['bottom'].set_linewidth(1)
+
+        # configures the chart title, axis labels, axis ticks, grid, and spacing
+        plt.title(f'Total Blown Leads for the St. Louis Cardinals: {seasons[0]}-{seasons[-1]}', y=1.10, fontsize=16)
+        plt.xlabel('STL', labelpad=10, fontsize=12)
+        stl_blown_leads_data_plot.set_xticklabels('')
+        plt.ylabel('Blown\nLeads', rotation=0, labelpad=30, fontsize=12)
+        stl_max_blown_leads = int(blown_leads_stl_data_frame['STL'].max())
+        y_ticks = self.calculate_y_ticks(stl_max_blown_leads)
+        plt.yticks(y_ticks, fontsize=8)
+        plt.xticks(fontsize=8)
+        plt.grid(True, color='0.75', linestyle='--', which='both', axis='y')
+
+        # outputs the plot
+        plt.savefig('results/stl_blown_leads.png', bbox_inches='tight')
 
     def plot_total_blown_leads_bar_chart(self, blown_leads_total_data_frame, seasons):
         """Creates a bar chart of the total number of blown leads for each team.
@@ -453,7 +707,7 @@ class BoxScoreDataAnalysisUtils:
             Technically nothing, but it creates a png file with a box plot of the total blown leads per team
         """
 
-        blown_leads_total_data_plot = blown_leads_total_data_frame.plot(kind='bar')  # creates the plot object
+        blown_leads_total_data_plot = blown_leads_total_data_frame.plot(kind='box')  # creates the plot object
 
         # configures the chart borders
         blown_leads_total_data_plot.spines['right'].set_visible(False)
@@ -477,3 +731,56 @@ class BoxScoreDataAnalysisUtils:
 
         # outputs the plot
         plt.savefig('results/blown_leads_total_data_box_plot.png')
+
+    def output_results(self, box_score_data_frame, max_blown_leads_total, min_blown_leads_total, max_blown_leads_total_data_frame,
+                       min_blown_leads_total_data_frame, blown_leads_all_seasons_dict, max_blown_leads_per_season_data_frame,
+                       min_blown_leads_per_season_data_frame, blown_leads_per_season_dict, blown_leads_stl_stats_dict,
+                       stl_blown_lead_losses_stats_dict):
+        """Writes a text file with the results of the data analysis.
+
+        Args:
+            A collection of the statistics and data generated by the box_score_data_analysis.py program
+
+        Returns:
+            Technically nothing, but it creates a text file with the data analysis results.
+        """
+
+        with open('results/results.txt', 'w') as f:
+            seasons = box_score_data_frame['season'].unique()
+            max_blown_leads_total_string = 'Maximum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(max_blown_leads_total) + '\n'
+            min_blown_leads_total_string = 'Minimum blown leads for any major league baseball team, seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(min_blown_leads_total) + '\n'
+            f.write(max_blown_leads_total_string)
+            f.write('Data for team(s) with the most blown leads for all seasons from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write(str(max_blown_leads_total_data_frame) + '\n')
+            f.write('\n')
+            f.write(min_blown_leads_total_string)
+            f.write('Data for team(s) with the fewest blown leads for all seasons from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write(str(min_blown_leads_total_data_frame) + '\n\n')
+            f.write('Data on the mean, median, and mode blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write('Mean number of blown leads: ' + str(blown_leads_all_seasons_dict['mean']) + '\n')
+            f.write('Mode number of blown leads: ' + str(blown_leads_all_seasons_dict['mode']) + '\n')
+            f.write('Median number of blown leads: ' + str(blown_leads_all_seasons_dict['median']) + '\n\n')
+            f.write('Data for the team(s) with the most blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write(str(max_blown_leads_per_season_data_frame) + '\n\n')
+            f.write('Data for the team(s) with the fewest blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write(str(min_blown_leads_per_season_data_frame) + '\n\n')
+            f.write('Data on the mean, mode, and median blown leads for each season from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            for season in seasons:
+                f.write(season + ' Data:\n')
+                f.write('\tMean: ' + str(blown_leads_per_season_dict[season]['mean']) + '\n')
+                f.write('\tMode: ' + str(blown_leads_per_season_dict[season]['mode']) + '\n')
+                f.write('\tMedian: ' + str(blown_leads_per_season_dict[season]['median']) + '\n\n')
+            f.write('St. Louis Cardinals Blown Leads Data:\n')
+            f.write('\tAverage number of blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(blown_leads_stl_stats_dict['mean']) + '\n')
+            f.write('\tSeason with the most blown leads: ' + str(blown_leads_stl_stats_dict['maximum']) + '\n')
+            f.write('\tSeason with the fewest blown leads: ' + str(blown_leads_stl_stats_dict['minimum']) + '\n\n')
+            f.write('Data on the mean, mode, and median blown leads for all seasons ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            f.write('\tMean: ' + str(blown_leads_stl_stats_dict['mean']) + '\n')
+            f.write('\tMode: ' + str(blown_leads_stl_stats_dict['mode']) + '\n')
+            f.write('\tMedian: ' + str(blown_leads_stl_stats_dict['median']) + '\n\n')
+            f.write('Data on games where the St. Louis Cardinals blew at least one lead and lost:\n')
+            f.write('\tTotal number of "blown lead losses" for the St. Louis Cardinals from seasons ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_lead_losses_stats_dict['total']) + '\n')
+            f.write('\tAverage number of "blown lead losses" for the St. Louis Cardinals per season from ' + seasons[0] + '-' + seasons[-1] + ': ' + str(stl_blown_lead_losses_stats_dict['mean']) + '\n')
+            f.write('\tNumber of "blown lead losses" from ' + seasons[0] + '-' + seasons[-1] + ':\n')
+            for season in seasons:
+                f.write('\t\t' + season + ' Blown Lead Losses: ' + str(stl_blown_lead_losses_stats_dict['seasons'][season]) + '\n')
