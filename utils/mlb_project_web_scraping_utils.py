@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(filename)s - %(module)s - %(lineno)d
 
 
 class MlbWebScrapingUtils:
-    """A collection of utility methods that web scrape data from baseball reference.
+    """A class with a collection of utility methods that web scrape data from baseball reference.
 
     Attributes:
         self.team_abbrvs: the list of team abbreviations.
@@ -26,7 +26,7 @@ class MlbWebScrapingUtils:
         self.logger = logging.getLogger()
 
     def url_generator(self):
-        """Generates the url for the baseball reference season home page (which contains the urls for every box score for a season) for all teams.
+        """Generates the url for the baseball reference season home page (which contains the urls for every box score for a season) for each team.
 
         Args:
             None technically, but it calls two instance variables:
@@ -130,7 +130,7 @@ class MlbWebScrapingUtils:
         """A handler method that manages the collection of the urls for the box scores for each team for all seasons in self.seasons.
 
         Args:
-            home_page_urls_dict: the dictionary object created in the url_generator method.
+            home_page_urls_dict: the dictionary object created in the url_generator method
             box_score_base_url: the base string that all box score urls share in common (e.g., https://www.baseball-reference.com/)
 
         Returns:
@@ -274,7 +274,7 @@ class MlbWebScrapingUtils:
                 home_team_inning_data[str(inning)] = inning_element.text  # stores data in a dictionary where keys are innings, and values are runs scored
                 inning += 1
 
-            # collect home team other box score data (runs, hits, errors)
+            # collect home team's other box score data (runs, hits, errors)
             home_team_other_data_elements = home_team_element.find_all('td')[-3:]
             home_team_other_box_score_data = {}
             index = 0

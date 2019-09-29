@@ -7,7 +7,15 @@ plt.rcParams["font.family"] = "Verdana"
 
 
 class BoxScoreDataAnalysisUtils:
+    """A class with a collection of utility methods that perform data analysis on the box score data generated in the box_score_data_collection.py program.
+
+    Attributes:
+        self.box_score_data_uri: the path to the data file containing the box score data.
+    """
+
     def __init__(self, box_score_data_uri):
+        """Initializes BoxScoreDataAnalysisUtils with self.box_score_data_uri."""
+
         self.box_score_data_uri = box_score_data_uri
 
     def calcuate_blown_lead_descriptive_stats_per_season(self, blown_leads_per_season_data_frame):
@@ -52,26 +60,11 @@ class BoxScoreDataAnalysisUtils:
 
         return blown_leads_per_season_dict
 
-    def calculate_seasons(self, box_score_data_frame):
-        """Finds the number of seasons in the dataframe (i.e., the number of seasons in the study).
-
-        Args:
-            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
-
-        Returns:
-            Returns a list of the seasons in the study. For example,
-
-            [2012, 2013]
-        """
-
-        seasons = list(box_score_data_frame['season'].unique())
-        return seasons
-
     def calcuate_blown_lead_descriptive_stats_stl(self, blown_leads_stl_data_frame):
         """Calcuates descriptive statistics (range, mean, median, mode) on the blown leads data for the St. Louis Cardinals.
 
         Args:
-            stl_blown_leads_data_frame: the data frame containing the number of blown leads per from each season for the St. Louis Cardinals
+            blown_leads_stl_data_frame: the data frame containing the number of blown leads per from each season for the St. Louis Cardinals
 
         Returns:
             Returns a dictionary containing the maximum, minimum, mean, median, and mode of the blown leads data for the St. Louis Cardinals.
@@ -148,21 +141,6 @@ class BoxScoreDataAnalysisUtils:
 
         return stl_blown_leads_all_seasons_data_dict
 
-    def calculate_team_abbrvs(self, box_score_data_frame):
-        """Finds the team abbreviations in the dataframe.
-
-        Args:
-            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
-
-        Returns:
-            Returns a list of the team abbreviations in the study. For example,
-
-            ['ARI', 'ATL', 'BAL']
-        """
-
-        team_abbrvs = list(box_score_data_frame['team_abbrv'].unique())
-        return team_abbrvs
-
     def calculate_max_blown_leads_per_season(self, box_score_data_frame, seasons):
         """Calculates the largerst number of leads a team blew for each season.
 
@@ -208,7 +186,7 @@ class BoxScoreDataAnalysisUtils:
         aggregation_function = {'blown_leads': 'sum'}
         max_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
 
-        max_blown_leads_total = max_blown_leads_total_data_frame['blown_leads'].max()  # finds the number of blown leads
+        max_blown_leads_total = max_blown_leads_total_data_frame['blown_leads'].max()  # finds the maximum number of blown leads
 
         return max_blown_leads_total
 
@@ -235,10 +213,10 @@ class BoxScoreDataAnalysisUtils:
             aggregation_function = {'blown_leads': 'sum'}
             season_data_frame = season_data_frame.groupby(['team_abbrv', 'season']).aggregate(aggregation_function)
 
-            # finds the maximum number of blown leads for that season
+            # finds the minimum number of blown leads for that season
             min_blown_leads_season_dict = season_data_frame['blown_leads'].min()
 
-            # stores the maximum number of blown leads for that season, in the dictionary containing the data for all seasons
+            # stores the minimum number of blown leads for that season, in the dictionary containing the data for all seasons
             min_blown_leads_per_seasons_dict[season] = min_blown_leads_season_dict
 
         return min_blown_leads_per_seasons_dict
@@ -257,9 +235,39 @@ class BoxScoreDataAnalysisUtils:
         aggregation_function = {'blown_leads': 'sum'}
         min_blown_leads_total_data_frame = box_score_data_frame.groupby('team_abbrv').aggregate(aggregation_function)
 
-        min_blown_leads_total = min_blown_leads_total_data_frame['blown_leads'].min()  # finds the number of blown leads
+        min_blown_leads_total = min_blown_leads_total_data_frame['blown_leads'].min()  # finds the minimum number of blown leads
 
         return min_blown_leads_total
+
+    def calculate_seasons(self, box_score_data_frame):
+        """Finds the number of seasons in the dataframe (i.e., the number of seasons in the study).
+
+        Args:
+            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
+
+        Returns:
+            Returns a list of the seasons in the study. For example,
+
+            [2012, 2013]
+        """
+
+        seasons = list(box_score_data_frame['season'].unique())
+        return seasons
+
+    def calculate_team_abbrvs(self, box_score_data_frame):
+        """Finds the team abbreviations in the dataframe.
+
+        Args:
+            box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
+
+        Returns:
+            Returns a list of the team abbreviations in the study. For example,
+
+            ['ARI', 'ATL', 'BAL']
+        """
+
+        team_abbrvs = list(box_score_data_frame['team_abbrv'].unique())
+        return team_abbrvs
 
     def calculate_total_blown_leads(self, box_score_data_frame):
         """Calculates the total number of leads each team blew for all seasons.
@@ -294,7 +302,8 @@ class BoxScoreDataAnalysisUtils:
             seasons: a list the number of seasons in the study
 
         Returns:
-            Returns a pandas dataframe where the index is team abbreviation and season number, and the only column is the number of blown leads for that season. For example:
+            Returns a pandas dataframe where the index is team abbreviation and season number, and the only column is the number of blown leads for that season.
+            For example:
 
                         blown_leads
             team_abbrv
@@ -379,7 +388,7 @@ class BoxScoreDataAnalysisUtils:
         return box_score_data_frame
 
     def create_blown_leads_per_season_data_frame(self, box_score_data_frame, seasons, team_abbrvs):
-        """Collects the number of blown leads per team for each season. 
+        """Collects the number of blown leads per team for each season.
 
         Args:
             box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
@@ -402,7 +411,7 @@ class BoxScoreDataAnalysisUtils:
 
             # collects blown leads for each team in the season
             aggregation_function = {'blown_leads': 'sum'}
-            blown_leads_single_season_data = blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)  # creates a new data frame containin the season data
+            blown_leads_single_season_data = blown_leads_single_season_data.groupby('team_abbrv').aggregate(aggregation_function)  # creates a new data frame containing the season data
 
             blown_leads_single_season_data = blown_leads_single_season_data.rename(columns={'blown_leads': f'Blown Leads {season}'})  # renames the blown leads column to include the season number
 
@@ -416,6 +425,7 @@ class BoxScoreDataAnalysisUtils:
         Args:
             box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
             max_blown_leads_per_season: the largest number of leads any team blew for each team, as calcuated in calculate_max_blown_leads_per_season
+            seasons: a list the number of seasons in the study
 
         Returns:
             Returns a pandas dataframe containing the name of the team(s) that blew the most leads for each season, the season, and the number of leads
@@ -456,7 +466,6 @@ class BoxScoreDataAnalysisUtils:
         Args:
             box_score_data_frame: the pandas dataframe holding every box score for study period, created in the convert_box_score_data_to_dataframe method
             max_blown_leads_total: the largest number of leads any team blew over the study period, as calcuated in calculate_max_blown_leads_total
-            seasons: a list the number of seasons in the study
 
         Returns:
             Returns a pandas dataframe containing the name of the team(s) that blew the most leads over the study period. For example:
@@ -592,6 +601,7 @@ class BoxScoreDataAnalysisUtils:
 
         Args:
             blown_leads_per_season_data_frame: the data frame containing the number of blown leads per team for each season, as created in the create_blown_leads_per_season_data_frame method
+            seasons: a list the number of seasons in the study
 
         Returns:
             Technically nothing, but it creates a png file with a box plot of the number of blown leads per team for each season

@@ -8,7 +8,7 @@ logger = logging.getLogger()
 
 class BoxScore:
     """
-    An class representing 1) a box score, and 2) containing requisite information that will be needed to complete data analysis on blown leads.
+    A class representing 1) a box score, and 2) containing requisite information that will be needed to complete data analysis on blown leads.
 
     Attributes:
 
@@ -25,7 +25,7 @@ class BoxScore:
         self.away_team_innings_data: the innings data for the away team (dictionary where keys are inning numbers, and values are the runs scored in the innings)
         self.away_team_other_data: the runs, hits, and errors data for the away team
 
-        self.team_side: A string indicating which side (away or home) the team
+        self.team_side: A string indicating which side (away or home) the team was
         self.result = A boolean indicating whether or not the team won (True is won, False if lost)
         self.blown_leads = The number of leads the team blew
     """
@@ -46,11 +46,11 @@ class BoxScore:
         self.season = season
 
         self.home_team = box_score_data['home_team']['team_name']
-        self.home_team_innings_data = list(dict(box_score_data['home_team']['inning_data']).values())  # for the home team, collects all the keys (inning numbers) from the box score
+        self.home_team_innings_data = list(dict(box_score_data['home_team']['inning_data']).values())  # for the home team, collects all the values (runs in an inning) from the box score
         self.home_team_other_data = box_score_data['home_team']['other_box_score_data']
 
         self.away_team = box_score_data['away_team']['team_name']
-        self.away_team_innings_data = list(dict(box_score_data['away_team']['inning_data']).values())  # for the away team, collects all the keys (inning numbers) from the box score
+        self.away_team_innings_data = list(dict(box_score_data['away_team']['inning_data']).values())  # for the away team, collects all the values (runs in an inning) from the box score
         self.away_team_other_data = box_score_data['away_team']['other_box_score_data']
 
         self.team_side = self.get_team_side()

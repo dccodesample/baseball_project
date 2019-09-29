@@ -2,7 +2,7 @@ import json
 
 
 class MlbTeamConfigUtils:
-    """Collects data from a mlb team config data file.
+    """A class that collects data from a mlb team config data file.
 
     Attributes:
         self.mlb_team_config_uri: the uri to the config data file.
