@@ -1,136 +1,102 @@
-Maximum blown leads for any major league baseball team, seasons 2012-2013: 2
-Data for team(s) with the most blown leads for all seasons from 2012-2013:
+Maximum blown leads for any major league baseball team, seasons 2012-2018: 101
+Data for team(s) with the most blown leads for all seasons from 2012-2018:
             blown_leads
 team_abbrv             
-STL                 2.0
+COL               101.0
 
-Minimum blown leads for any major league baseball team, seasons 2012-2013: 0
-Data for team(s) with the fewest blown leads for all seasons from 2012-2013:
+Minimum blown leads for any major league baseball team, seasons 2012-2018: 45
+Data for team(s) with the fewest blown leads for all seasons from 2012-2018:
             blown_leads
 team_abbrv             
-ARI                 0.0
-ATL                 0.0
-BOS                 0.0
-CHC                 0.0
-CHW                 0.0
-COL                 0.0
-DET                 0.0
-HOU                 0.0
-KCR                 0.0
-LAA                 0.0
-LAD                 0.0
-MIA                 0.0
-MIL                 0.0
-MIN                 0.0
-NYM                 0.0
-NYY                 0.0
-OAK                 0.0
-PHI                 0.0
-PIT                 0.0
-SDP                 0.0
-SEA                 0.0
-SFG                 0.0
-TEX                 0.0
-TOR                 0.0
-WSN                 0.0
+LAD                45.0
 
-Data on the mean, median, and mode blown leads for all seasons 2012-2013:
-Mean number of blown leads: 0.2
-Mode number of blown leads: 0
-Median number of blown leads: 0.0
+Data on the mean, median, and mode blown leads for all seasons 2012-2018:
+Mean number of blown leads: 70.53333333333333
+Mode number of blown leads: 66
+Median number of blown leads: 72.5
 
-Data for the team(s) with the most blown leads for each season from 2012-2013:
+Data for the team(s) with the most blown leads for each season from 2012-2018:
                    blown_leads
 team_abbrv season             
-CLE        2012            1.0
-STL        2012            1.0
-TBR        2012            1.0
-BAL        2013            1.0
-CIN        2013            1.0
-STL        2013            1.0
+COL        2012           21.0
+BAL        2013           17.0
+COL        2013           17.0
+           2014           18.0
+CIN        2015           16.0
+OAK        2015           16.0
+ARI        2016           18.0
+BAL        2017           18.0
+LAA        2017           18.0
+OAK        2017           18.0
+KCR        2018           18.0
 
-Data for the team(s) with the fewest blown leads for each season from 2012-2013:
+Data for the team(s) with the fewest blown leads for each season from 2012-2018:
                    blown_leads
 team_abbrv season             
-ARI        2012            0.0
-ATL        2012            0.0
-BAL        2012            0.0
-BOS        2012            0.0
-CHC        2012            0.0
-CHW        2012            0.0
-CIN        2012            0.0
-COL        2012            0.0
-DET        2012            0.0
-HOU        2012            0.0
-KCR        2012            0.0
-LAA        2012            0.0
-LAD        2012            0.0
-MIA        2012            0.0
-MIL        2012            0.0
-MIN        2012            0.0
-NYM        2012            0.0
-NYY        2012            0.0
-OAK        2012            0.0
-PHI        2012            0.0
-PIT        2012            0.0
-SDP        2012            0.0
-SEA        2012            0.0
-SFG        2012            0.0
-TEX        2012            0.0
-TOR        2012            0.0
-WSN        2012            0.0
-ARI        2013            0.0
-ATL        2013            0.0
-BOS        2013            0.0
-CHC        2013            0.0
-CHW        2013            0.0
-CLE        2013            0.0
-COL        2013            0.0
-DET        2013            0.0
-HOU        2013            0.0
-KCR        2013            0.0
-LAA        2013            0.0
-LAD        2013            0.0
-MIA        2013            0.0
-MIL        2013            0.0
-MIN        2013            0.0
-NYM        2013            0.0
-NYY        2013            0.0
-OAK        2013            0.0
-PHI        2013            0.0
-PIT        2013            0.0
-SDP        2013            0.0
-SEA        2013            0.0
-SFG        2013            0.0
-TBR        2013            0.0
-TEX        2013            0.0
-TOR        2013            0.0
-WSN        2013            0.0
+TOR        2012            4.0
+LAD        2013            4.0
+SDP        2014            1.0
+           2015            4.0
+SFG        2015            4.0
+CLE        2016            3.0
+KCR        2016            3.0
+BOS        2017            5.0
+STL        2018            5.0
 
-Data on the mean, mode, and median blown leads for each season from 2012-2013:
+Data on the mean, mode, and median blown leads for each season from 2012-2018:
 2012 Data:
-	Mean: 0.1
-	Mode: 0.0
-	Median: 0.0
+	Mean: 10.1
+	Mode: 8.0
+	Median: 10.0
 
 2013 Data:
-	Mean: 0.1
-	Mode: 0.0
-	Median: 0.0
+	Mean: 10.033333333333333
+	Mode: 10.0
+	Median: 10.0
+
+2014 Data:
+	Mean: 8.833333333333334
+	Mode: 8.0
+	Median: 8.5
+
+2015 Data:
+	Mean: 9.2
+	Mode: 8.0
+	Median: 9.0
+
+2016 Data:
+	Mean: 10.366666666666667
+	Mode: 10.0
+	Median: 10.0
+
+2017 Data:
+	Mean: 11.466666666666667
+	Mode: 9.0
+	Median: 11.0
+
+2018 Data:
+	Mean: 10.533333333333333
+	Mode: 10.0
+	Median: 10.0
 
 St. Louis Cardinals Blown Leads Data:
-	Average number of blown leads for all seasons 2012-2013: 1
-	Season with the most blown leads: {'Blown Leads 2012': 1}
-	Season with the fewest blown leads: {'Blown Leads 2012': 1}
+	Average number of blown leads for all seasons 2012-2018: 8
+	Season with the most blown leads: {'Blown Leads 2014': 13}
+	Season with the fewest blown leads: {'Blown Leads 2015': 5}
 
-Data on the mean, mode, and median blown leads for all seasons 2012-2013:
-	Mean: 1
-	Mode: [[1.]]
-	Median: 1
+Data on the mean, mode, and median blown leads for all seasons 2012-2018:
+	Mean: 8
+	Mode: [[5.]]
+	Median: 7
 
 Data on games where the St. Louis Cardinals blew at least one lead and lost:
-	Total number of "blown lead losses" for the St. Louis Cardinals from seasons 2012-2013: 2
-	Average number of "blown lead losses" for the St. Louis Cardinals per season from 2012-2013: 1.0
-	Number of "blown lead losses" from 2012-2013:
-		2012 Blown Lead Losses: 1.0
-		2013 Blown Lead Losses: 1.0
+	Total number of "blown lead losses" for the St. Louis Cardinals from seasons 2012-2018: 39
+	Average number of "blown lead losses" for the St. Louis Cardinals per season from 2012-2018: 5.571428571428571
+	Number of "blown lead losses" from 2012-2018:
+		2012 Blown Lead Losses: 5.0
+		2013 Blown Lead Losses: 6.0
+		2014 Blown Lead Losses: 9.0
+		2015 Blown Lead Losses: 1.0
+		2016 Blown Lead Losses: 5.0
+		2017 Blown Lead Losses: 10.0
+		2018 Blown Lead Losses: 3.0

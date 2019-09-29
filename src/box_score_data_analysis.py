@@ -11,7 +11,7 @@ logger.info('STARTING: Data Analysis')
 
 # collects box score data
 logger.info('STARTING: Collecting box score data')
-data_analysis_utils_object = BoxScoreDataAnalysisUtils('data/box_score_data_small.json')
+data_analysis_utils_object = BoxScoreDataAnalysisUtils('data/box_score_data.json')
 box_score_data = data_analysis_utils_object.get_box_score_data()
 logger.info('FINISHED: Collecting box score data')
 
