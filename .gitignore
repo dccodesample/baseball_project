@@ -13,3 +13,6 @@ __pycache__
 # vscode items
 .vscode
 .DS_Store
+
+# flake8
+.flake8
