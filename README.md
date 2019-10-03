@@ -1,13 +1,13 @@
 Introduction
 
 This code sample collects and analyzes data from Major League Baseball (MLB) games, using the
-Python programming language. Please refer to the Baseball Wikipedia page for a full
-explanation of the game, and specific terms and concepts that will be necessary to understand
-the sample. Specifically, look into the terms box score, blown lead, bullpen management,
-manager, and season.
+Python programming language. Please refer to the Baseball Wikipedia page
+(https://en.wikipedia.org/wiki/Baseball) for a full explanation of the game, and the 
+BaseballREADME.md for specific terms and concepts that will be necessary to understand the
+sample.
 
 The sample was inspired by the desire to have a simple measure of a concept in Baseball called
-bullpen management. Essentially, how well to does a manager use thier pitchers to minimize the
+bullpen management. Essentially, how well does a manager use their pitchers to minimize the
 number of runs the opposing team scores? To that end, it isolates one event in Baseball that
 marks failed bullpen management, blown leads. A lead is blown when one team has more runs than
 the other, and then surrenders that lead. The idea being that managers who are effective at
@@ -20,8 +20,7 @@ a brief run through of what the project does in more detail (Overview of the Cod
 
 Downloading
 
-Create a project folder, and download the repository from github onto your machine using the
-command:
+Download the repository from github onto your machine using the command:
 git clone https://github.com/dccodesample/baseball_project.git
 
 Setup
@@ -63,15 +62,20 @@ This code sample has two main steps, and several sub-steps within each of those 
         as well as other information necessary to analyze the data (e.g., the number of leads
         the team blew that game).
 
-        C) Store each "Box Score Object" as a row in a Pandas dataframe.
+        C) Store each "Box Score Object" as a row in a Pandas data frame.
 
         D) Analyze the data and output the analysis in the form of charts and a results.txt file.
 
-Your primary entry point for this code sample is main.py. It contains two lines, one to collect
-data and one to analyze it. The data collection process is very time instensive. To avoid this,
-you can reduce the number of years in the study, using the years variable in data_collection.py.
-It is also recommended that you only run the data collection step in main.py once. If you only
-want to run the data analysis step, simply comment out the data collection line from main.py.
+Both of these steps have already been completed, and the results are available for you to look
+at. The datafile is located at data/box_score_data.json, and the charts and results.txt file are
+located in the results folder.
+
+You can also run the code yourself, in which case your primary entry point is main.py. It contains
+two lines, one to collect data and one to analyze it. The data collection process is very time
+intensive. To avoid this, you can reduce the number of years in the study, using the years
+variable in data_collection.py. It is also recommended that you only run the data collection step
+in main.py once. If you only want to run the data analysis step, simply comment out the data
+collection line from main.py.
 
 Note: For the purposes of this sample, I only analyzed instances where a team blew a lead of
 three or more runs. I did this to isolate the analysis to events of gross mismanagement.
