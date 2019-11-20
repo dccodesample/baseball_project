@@ -86,8 +86,8 @@ at. The datafile is located at data/box_score_data.json, and the charts and resu
 located in the results folder.
 
 You can also run the code yourself, in which case there are two entry points to the project:
-box_score_data_analysis.py and box_score_data_collection.py, located in the src file.
-box_score_data_collection.py should be run first as it handles the data collection process, and box_score_data_analysis.py should
+box_score_data_analysis.py and box_score_data_collection.py. box_score_data_collection.py
+should be run first as it handles the data collection process, and box_score_data_analysis.py should
 be run second as it analyzes the collected data. The data collection process is very time
 intensive, taking approximately 30 minutes for every year included in the project. To avoid this,
 you can reduce the number of years in the study, using the years variable in
